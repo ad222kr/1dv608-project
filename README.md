@@ -1,1 +1,2 @@
-#Repository for the project in course 1dv608 - Web development with php
+#1dv607 - Project
+Repository for the project in the course Web development with php

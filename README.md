@@ -1,1 +1,1 @@
-# 1dv608-project
+#Repository for the project in course 1dv608 - Web development with php

@@ -1,10 +1,5 @@
 <?php
 
-/**
- * Class Settings
- * The settings file that contains app-specific information
- */
-
 class Settings {
 
     /**

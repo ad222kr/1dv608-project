@@ -9,6 +9,7 @@ require_once("src/model/BaseDAL.php");
 require_once("src/model/BeerDAL.php");
 require_once("src/view/LayoutView.php");
 require_once("Settings.php");
+require_once("src/model/Beer.php");
 
 class MasterController {
 
@@ -17,17 +18,23 @@ class MasterController {
         $layoutView = new LayoutView();
         $beerDAL = new BeerDAL();
 
-        $testLOL = $beerDAL->getBeers();
 
         $str = "<ul>";
 
-        foreach ($testLOL as $test) {
-            $str .= "<li>$test</li>";
-        }
 
         $str .= "</ul>";
 
         $layoutView->render("APPLOL", $str);
+        foreach ($beerDAL->getBeers() as $beer) {
+            echo $beer->getName();
+            echo "<br />";
+            echo $beer->getAbv();
+            echo "<br />";
+            echo $beer->getManufacturer();
+            echo "<img src=" . $beer->getImageURL() . " >";
+            echo "<br />";
+        }
+
     }
 
 }

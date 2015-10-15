@@ -4,7 +4,19 @@ namespace model;
 
 class BeerDAL extends BaseDAL{
 
-    private static $table = "testtable"; // change when real table is setup
+    /*
+     *  CREATE TABLE `beers` (
+       `Id` int(11) NOT NULL AUTO_INCREMENT,
+       `Name` varchar(80) NOT NULL,
+       `Abv` double NOT NULL,
+       `Manufacturer` varchar(80) NOT NULL,
+       `ImageURL` varchar(255) NOT NULL DEFAULT 'assets/uploaded-beer-pics/no_picture_beer.jpg',
+        PRIMARY KEY (`Id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+     */
+
+    private static $table = "beers"; // change when real table is setup
 
     public function __construct() {
         parent::__construct();
@@ -20,12 +32,12 @@ class BeerDAL extends BaseDAL{
 
         $stmt->execute();
 
-        $stmt->bind_result($pk, $name);
+        $stmt->bind_result($id, $name, $abv, $manufacturer, $imageURL);
 
         $ret = array();
 
         while ($stmt->fetch()) {
-            $ret[] = $name;
+            $ret[] = new Beer($id, $name, $abv, $manufacturer, $imageURL);
         }
 
         return $ret;

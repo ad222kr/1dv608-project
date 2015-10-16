@@ -2,22 +2,27 @@
 
 namespace controller;
 
-use model\BeerDAL;
-
-require_once("app/model/BaseDAL.php");
-require_once("app/model/BeerDAL.php");
+require_once("app/model/DAL/BaseDAL.php");
+require_once("app/model/DAL/BeerDAL.php");
 require_once("app/view/LayoutView.php");
 require_once("config/Settings.php");
 require_once("app/model/Beer.php");
 
+
 class MasterController {
 
+    /**
+     * @throws \Exception
+     */
     public function run() {
 
         $layoutView = new \view\LayoutView();
 
 
-        $bDAL = new BeerDAL();
+        $bDAL = new \model\BeerDAL();
+        $b = new \model\Beer("Corona", 4.5, "Unknown", "Mexico", 33, "Flaska");
+
+        $bDAL->addBeer($b);
 
         $str = "<ul>";
 
@@ -26,6 +31,8 @@ class MasterController {
             $str .= "<li>" . $beer->getName() . "</li>";
             $str .= "<li>" . $beer->getBrewery() . "</li>";
             $str .= "<li><img src=" . $beer->getImageURL() . " alt='beer.jpg' height='80' width='40'> </li>";
+            $str .= "<li>" . $beer->getQueryString() . " </li>";
+
             $str .= "</ul></li>";
 
         }
@@ -41,5 +48,7 @@ class MasterController {
 
 
     }
+
+
 
 }

@@ -24,7 +24,6 @@ class BeerDAL extends BaseDAL{
 
     public function getBeers() {
 
-        // just some testcode atm
         $stmt = $this->conn->prepare("SELECT * FROM " . self::$table);
         if (!$stmt) {
             throw new \Exception($this->conn->error);
@@ -37,10 +36,31 @@ class BeerDAL extends BaseDAL{
         $ret = array();
 
         while ($stmt->fetch()) {
-            $ret[] = new Beer($id, $name, $abv, $manufacturer, $imageURL, $country, $volume, $servingType);
+            $ret[] = new Beer($name, $abv, $manufacturer, $country, $volume, $servingType, $id,  $imageURL);
         }
 
         return $ret;
+    }
+
+    public function addBeer(\model\Beer $beer) {
+        $stmt = $this->conn->prepare("INSERT INTO " . self::$table . " (
+                Name, Abv, Manufacturer, ImageURL, Country, Volume, ServingType)
+                VALUES(?, ?, ?, ?, ?, ?, ?)");
+
+        if (!$stmt)
+            throw new \Exception($this->conn->error);
+
+        $name = $beer->getName();
+        $abv = $beer->getAbv();
+        $manufacturer = $beer->getBrewery();
+        $imageurl = $beer->getImageURL();
+        $country = $beer->getCountry();
+        $volume = $beer->getVolume();
+        $servingType = $beer->getServingType();
+
+        $stmt->bind_param('sdsssds', $name, $abv, $manufacturer, $imageurl, $country, $volume, $servingType);
+
+        $stmt->execute();
     }
 
 }

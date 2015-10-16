@@ -21,8 +21,7 @@ class MasterController {
 
         $bDAL = new \model\BeerDAL();
         $b = new \model\Beer("Corona", 4.5, "Unknown", "Mexico", 33, "Flaska");
-
-        $bDAL->addBeer($b);
+        
 
         $str = "<ul>";
 

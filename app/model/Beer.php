@@ -14,17 +14,31 @@ class Beer {
     private $id;
     private $name;
     private $abv;
-    private $manufacturer;
+    private $brewery;
     private $imageURL;
+    private $country;
+    private $volume;
+    private $servingType;
     private $price;
 
-    public function __construct($id, $name, $abv, $manufacturer, $imageURL) {
+
+    //TODO: remember to remove default for price. Will get price via Join in sql.
+    public function __construct($id, $name, $abv, $brewery, $imageURL, $country, $volume, $servingType,
+                                $price=20) {
         //TODO: Validation
         $this->id = $id;
         $this->name = $name;
         $this->abv = $abv;
-        $this->manufacturer = $manufacturer;
+        $this->brewery = $brewery;
         $this->imageURL = $imageURL;
+        $this->country = $country;
+        $this->volume = $volume;
+        $this->servingType = $servingType;
+        $this->price = $price;
+    }
+
+    public function getQueryString() {
+        return htmlentities($this->name . "_" . $this->volume . "_" . $this->servingType, ENT_QUOTES);
     }
 
     public function getId() {
@@ -35,8 +49,8 @@ class Beer {
         return $this->name;
     }
 
-    public function getManufacturer() {
-        return $this->manufacturer;
+    public function getBrewery() {
+        return $this->brewery;
     }
 
     public function getImageURL() {

@@ -3,7 +3,6 @@
 namespace controller;
 
 use model\BeerDAL;
-use view\LayoutView;
 
 require_once("app/model/BaseDAL.php");
 require_once("app/model/BeerDAL.php");
@@ -15,14 +14,27 @@ class MasterController {
 
     public function run() {
 
-        $layoutView = new LayoutView();
+        $layoutView = new \view\LayoutView();
 
-        echo "<img src='images/user_uploaded/no_picture_beer.jpg' >";
-        echo "<br />";
+
+        $bDAL = new BeerDAL();
+
         $str = "<ul>";
+
+        foreach ($bDAL->getBeers() as $beer) {
+            $str .= "<li><ul>";
+            $str .= "<li>" . $beer->getName() . "</li>";
+            $str .= "<li>" . $beer->getBrewery() . "</li>";
+            $str .= "<li><img src=" . $beer->getImageURL() . " alt='beer.jpg' height='80' width='40'> </li>";
+            $str .= "</ul></li>";
+
+        }
+
 
 
         $str .= "</ul>";
+
+
 
         $layoutView->render("APPLOL", $str);
 

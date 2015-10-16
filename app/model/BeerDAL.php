@@ -32,12 +32,12 @@ class BeerDAL extends BaseDAL{
 
         $stmt->execute();
 
-        $stmt->bind_result($id, $name, $abv, $manufacturer, $imageURL);
+        $stmt->bind_result($id, $name, $abv, $manufacturer, $imageURL, $country, $volume, $servingType);
 
         $ret = array();
 
         while ($stmt->fetch()) {
-            $ret[] = new Beer($id, $name, $abv, $manufacturer, $imageURL);
+            $ret[] = new Beer($id, $name, $abv, $manufacturer, $imageURL, $country, $volume, $servingType);
         }
 
         return $ret;

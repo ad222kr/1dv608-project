@@ -31,7 +31,7 @@ class MasterController {
             echo $beer->getAbv();
             echo "<br />";
             echo $beer->getManufacturer();
-            echo "<img src='no_picture_beer.jpg' >";
+            echo "<img src='assets/uploaded-beer-pics/no_picture_beer.jpg' >";
             echo "<br />";
         }
 

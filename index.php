@@ -7,8 +7,12 @@ ini_set('display_errors', 'On');
 
 
 $mc = new \controller\MasterController();
+$mc->doControl();
 
-$mc->run();
+$view = $mc->getView();
+
+$
+
 
 
 

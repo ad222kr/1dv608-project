@@ -1,13 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alex
- * Date: 2015-10-16
- * Time: 17:29
- */
 
 namespace view;
 
+/**
+ * Class NavigationView
+ * Used for getting URLs to different views in the application.
+ * Does not implement IView since it does'nt need a render-function.
+ * @package view
+ */
 
 class NavigationView {
 
@@ -58,7 +58,4 @@ class NavigationView {
     public function userWantsToSeeSpecificPub() {
         return isset($_GET[self::$pubID]);
     }
-
-
-
 }

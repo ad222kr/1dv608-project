@@ -33,6 +33,8 @@ class BeerDAL extends BaseDAL{
 
         $stmt->bind_result($id, $name, $abv, $manufacturer, $imageURL, $country, $volume, $servingType);
 
+
+        // TODO: not returning an array
         $ret = array();
 
         while ($stmt->fetch()) {
@@ -40,6 +42,10 @@ class BeerDAL extends BaseDAL{
         }
 
         return $ret;
+    }
+
+    public function getBeersByPub(\model\Pub $pub) {
+
     }
 
     public function addBeer(\model\Beer $beer) {

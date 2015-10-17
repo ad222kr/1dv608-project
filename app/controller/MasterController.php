@@ -40,8 +40,8 @@ class MasterController implements IController {
     public function doControl() {
         $pDAL = new \model\PubDAL();
         $bDAL = new \model\BeerDAL();
-        $bDAL->updateBeer(new \model\Beer("Hello IPA", 4.5, "BredCat", "Sverige", 33, "flawska", "images/user_uploaded/no_picture_beer.jpg",
-            35, 2));
+        $bDAL->updateBeer(new \model\Beer("Sonny Bljat IPA", 4.5, "BredCat", "Sverige", 33, "flawska", "images/user_uploaded/no_picture_beer.jpg",
+            35, 22));
         return $bDAL->getBeers();
     }
 

@@ -1,4 +1,4 @@
-<?php header('Content-Type: text/html; charset=utf-8');
+<?php
 
 require_once("app/controller/IController.php");
 require_once("app/view/IView.php");
@@ -15,8 +15,17 @@ $nv = new \view\NavigationView();
 $lv = new \view\LayoutView($nv);
 $mc = new \controller\MasterController($nv);
 
+$beers = $mc->doControl();
+$html = "<ul>";
 
-$lv->render("Hey there");
+foreach($beers as $beer) {
+    $html .= "<li>" .  $beer->getName() . "</li>";
+}
+
+$html .= "</ul>";
+
+
+$lv->render($html);
 
 
 

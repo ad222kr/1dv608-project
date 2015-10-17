@@ -3,11 +3,8 @@
 namespace controller;
 
 
-require_once("app/model/DAL/BaseDAL.php");
-require_once("app/model/DAL/BeerDAL.php");
-require_once("app/model/DAL/PubDAL.php");
-require_once("app/view/LayoutView.php");
-require_once("app/view/NavigationView.php");
+
+require_once("app/model/Service.php");
 require_once("config/Settings.php");
 require_once("app/model/Beer.php");
 require_once("app/model/Pub.php");
@@ -33,18 +30,19 @@ class MasterController implements IController {
     public function __construct(\view\NavigationView $navigationView) {
         $this->navigationView = $navigationView;
 
-        header('Content-Type: text/html; charset=utf-8');
-        // lol
-        $pDAL = new \model\PubDAL();
 
-        foreach ($pDAL->getPubs() as $pub) {
-            echo $pub->getAddress();
-            echo "едц";
-        }
+
+
+
     }
 
 
     public function doControl() {
+        $pDAL = new \model\PubDAL();
+        $bDAL = new \model\BeerDAL();
+        $bDAL->updateBeer(new \model\Beer("Hello IPA", 4.5, "BredCat", "Sverige", 33, "flawska", "images/user_uploaded/no_picture_beer.jpg",
+            35, 2));
+        return $bDAL->getBeers();
     }
 
     public function getView() {

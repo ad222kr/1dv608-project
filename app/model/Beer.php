@@ -23,8 +23,8 @@ class Beer {
 
 
     //TODO: remember to remove default for price. Will get price via Join in sql. Fix nicer way of making standardUrl.
-    public function __construct($name, $abv, $brewery, $country, $volume, $servingType, $id=0,
-                                 $imageURL="images/user_uploaded/no_picture_beer.jpg", $price=20) {
+    public function __construct($name, $abv, $brewery, $country, $volume, $servingType,
+                                 $imageURL="images/user_uploaded/no_picture_beer.jpg", $price=20, $id=0) {
         //TODO: Validation
         $this->id = $id;
         $this->name = $name;
@@ -38,7 +38,7 @@ class Beer {
     }
 
     public function getQueryString() {
-        return htmlentities($this->name . "_" . $this->volume . "_" . $this->servingType, ENT_QUOTES);
+        return htmlentities($this->name . "_" . $this->volume . "_" . $this->servingType . "_" . $this->id, ENT_QUOTES);
     }
 
     public function getCountry() {

@@ -43,6 +43,7 @@ abstract class BaseDAL {
         $db = substr($url[self::$dbnameKey], 1);
 
         $mysqli = new \mysqli($host, $un, $pw, $db);
+        $mysqli->set_charset("utf8");
 
         if (mysqli_connect_errno()) {
             printf("Connect failed: %s\n", mysqli_connect_errno());

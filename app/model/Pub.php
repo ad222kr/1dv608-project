@@ -13,10 +13,9 @@ class Pub {
 
     private $id;
     private $name;
-
-
     private $address;
     private $webpageURL;
+    private $beers;
 
     public function __construct($name, $address, $webpageURL, $id=0) {
         //TODO: Add validation
@@ -25,6 +24,7 @@ class Pub {
         $this->name = $name;
         $this->address = $address;
         $this->webpageURL = $webpageURL;
+        $this->beers = array();
     }
 
 
@@ -54,6 +54,16 @@ class Pub {
      */
     public function getWebpageURL() {
         return $this->webpageURL;
+    }
+
+    public function addBeer(Beer $beer) {
+        //TODO: validation?
+        $this->beers[$beer->getQueryString()] = $beer;
+    }
+
+    public function getBeer($key) {
+        // TODO:_ check for errors etc,e xception
+        return $this->beers[$key];
     }
 
 

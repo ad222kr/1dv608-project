@@ -44,14 +44,13 @@ class BeerDAL extends BaseDAL{
         return $ret;
     }
 
-    public function getBeersByPub(\model\Pub $pub) {
+    public function getBeerById($id) {
+        assert(is_int($id));
 
     }
 
     public function addBeer(\model\Beer $beer) {
-        $stmt = $this->conn->prepare("INSERT INTO " . self::$table . " (
-                Name, Abv, Manufacturer, ImageURL, Country, Volume, ServingType)
-                VALUES(?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $this->conn->prepare("CALL insert_beer(?, ?, ?, ?, ?, ?, ?)");
 
         if (!$stmt)
             throw new \Exception($this->conn->error);
@@ -67,6 +66,27 @@ class BeerDAL extends BaseDAL{
         $stmt->bind_param('sdsssds', $name, $abv, $manufacturer, $imageurl, $country, $volume, $servingType);
 
         $stmt->execute();
+    }
+
+    public function updateBeer(\model\Beer $beer) {
+        $stmt = $this->conn->prepare("CALL update_beer(?, ?, ?, ?, ?, ?, ?, ?)");
+
+        if (!$stmt)
+            throw new \Exception($this->conn->error);
+
+        $id = $beer->getId();
+        $name = $beer->getName();
+        $abv = $beer->getAbv();
+        $manufacturer = $beer->getBrewery();
+        $imageurl = $beer->getImageURL();
+        $country = $beer->getCountry();
+        $volume = $beer->getVolume();
+        $servingType = $beer->getServingType();
+
+        $stmt->bind_param("isdsssds", $id, $name, $abv, $manufacturer, $imageurl, $country, $volume, $servingType);
+
+        $stmt->execute();
+
     }
 
 }

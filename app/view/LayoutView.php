@@ -25,7 +25,7 @@ class LayoutView  {
     }
 
     public function render($html) {
-        header('Content-Type: text/html; charset=utf-8');
+
         echo '<!DOCTYPE html>
             <html>
                 <head>
@@ -43,7 +43,7 @@ class LayoutView  {
 
                     <footer>
                         <p>Application created for the course 1dv608 - Web development with PHP at Linneaus Univercity by Alex Driaguine</p>
-                        <p>ÅÄÖ LOL</p>
+                        <p>Ã… Ã„ Ã– LOL</p>
                     </footer>
 
                 </body>

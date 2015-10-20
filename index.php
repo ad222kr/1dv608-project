@@ -10,7 +10,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
 
-
+echo "test";
 $nv = new \view\NavigationView();
 $lv = new \view\LayoutView($nv);
 $mc = new \controller\MasterController($nv);

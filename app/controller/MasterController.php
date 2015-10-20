@@ -1,13 +1,15 @@
 <?php
 
 namespace controller;
-
-
+use view\AddBeerView;
+use view\HomeView;
 
 require_once("app/model/Service.php");
 require_once("config/Settings.php");
 require_once("app/model/Beer.php");
 require_once("app/model/Pub.php");
+require_once("app/view/AddBeerView.php");
+require_once("app/view/HomeView.php");
 
 
 
@@ -30,19 +32,18 @@ class MasterController implements IController {
     public function __construct(\view\NavigationView $navigationView) {
         $this->navigationView = $navigationView;
 
-
-
-
-
     }
 
 
     public function doControl() {
-        $pDAL = new \model\PubDAL();
-        $bDAL = new \model\BeerDAL();
-        $bDAL->updateBeer(new \model\Beer("Sonny Bljat IPA", 4.5, "BredCat", "Sverige", 33, "flawska", "images/user_uploaded/no_picture_beer.jpg",
-            35, 22));
-        return $bDAL->getBeers();
+
+        if ($this->navigationView->userWantsToAddBeer()) {
+            $this->currentView = new AddBeerView();
+        } else {
+            $this->currentView = new HomeView();
+        }
+
+        var_dump($_POST);
     }
 
     public function getView() {

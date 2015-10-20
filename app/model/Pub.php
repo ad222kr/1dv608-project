@@ -36,6 +36,7 @@ class Pub {
     }
 
     /**
+
      * @return string
      */
     public function getName() {
@@ -56,15 +57,33 @@ class Pub {
         return $this->webpageURL;
     }
 
-    public function addBeer(Beer $beer) {
-        //TODO: validation?
-        $this->beers[$beer->getQueryString()] = $beer;
+    public function addBeer(Beer $toBeAdded) {
+        foreach ($this->beers as $beer) {
+            if ($beer->getId() == $toBeAdded->getId()){
+                throw new \Exception("Beer already exists, cannot add it again");
+            }
+        }
+        //
+        $this->beers[$toBeAdded->getId()] = $beer;
     }
+
 
     public function getBeer($key) {
         // TODO:_ check for errors etc,e xception
-        return $this->beers[$key];
+        if (isset($this->beers[$key]))
+            return $this->beers[$key];
+
+        return null; // throw exception?
     }
+
+    public function getBeers() {
+        return $this->beers;
+    }
+
+    public function getQueryString() {
+        return strtolower($this->name);
+    }
+
 
 
 

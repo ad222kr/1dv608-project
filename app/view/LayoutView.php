@@ -36,6 +36,13 @@ class LayoutView  {
                     <header>
                         <h1>Hello ProjectApp</h1>
                     </header>
+                    <nav>
+                        <ul>
+                            <li>' . $this->navigationView->getLinkToHome() . '</li>
+                            <li>' . $this->navigationView->getLinkToAddBeer() . '</li>
+                            <li>' . $this->navigationView->getLinkToPubList() . '</li>
+                        </ul>
+                    </nav>
 
                     <div class="container">
                         ' . $html .'

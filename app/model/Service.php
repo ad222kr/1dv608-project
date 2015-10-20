@@ -23,8 +23,27 @@ class Service {
         $this->pubDAL = new PubDAL();
     }
 
-    public function getBeerByQueryStringInformation($string) {
-        return $this->beerDAL->getBeer($string);
+    public function getBeerById($id) {
+        assert(is_int($id));
+        return $this->beerDAL->getBeerById($id);
+    }
+
+    public function getBeers() {
+        return $this->beerDAL->getBeers();
+    }
+
+    public function getPubs() {
+        return $this->pubDAL->getPubs();
+    }
+
+    public function getPubById($id) {
+        //TODO: populate Pub with beers that have connection via BeerCatalog here
+        assert(is_int($id));
+        return $this->pubDAL->getPubs();
+    }
+
+    private function getBeerCatalog() {
+        //TODO: get relation-table
     }
 
 

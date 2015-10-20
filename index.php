@@ -15,17 +15,12 @@ $nv = new \view\NavigationView();
 $lv = new \view\LayoutView($nv);
 $mc = new \controller\MasterController($nv);
 
-$beers = $mc->doControl();
-$html = "<ul>";
-
-foreach($beers as $beer) {
-    $html .= "<li>" .  $beer->getName() . "</li>";
-}
-
-$html .= "</ul>";
+$mc->doControl();
+$currentView = $mc->getView();
 
 
-$lv->render($html);
+
+$lv->render($currentView->render());
 
 
 

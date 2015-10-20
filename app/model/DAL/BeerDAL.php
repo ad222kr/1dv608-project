@@ -24,10 +24,11 @@ class BeerDAL extends BaseDAL{
 
     public function getBeers() {
 
-        $stmt = $this->conn->prepare("SELECT * FROM " . self::$table);
+        $stmt = $this->conn->prepare("call get_beers()");
         if (!$stmt) {
             throw new \Exception($this->conn->error);
         }
+        var_dump($stmt);
 
         $stmt->execute();
 
@@ -44,13 +45,28 @@ class BeerDAL extends BaseDAL{
         return $ret;
     }
 
-    public function getBeerById($id) {
-        assert(is_int($id));
+    public function getBeerById($beerId) {
+
+        $stmt = $this->conn->prepare("call get_beer_by_id(?)");
+
+        if (!$stmt)
+            throw new \Exception($this->conn->error);
+
+        $stmt->bind_param('i', $beerId);
+
+        $stmt->execute();
+
+
+
+        $stmt->bind_result($id, $name, $abv, $manufacturer, $imageURL, $country, $volume, $servingtype);
+        $stmt->fetch();
+
+        return new Beer($name, $abv, $manufacturer, $country, $volume, $servingtype, $imageURL, $id);
 
     }
 
     public function addBeer(\model\Beer $beer) {
-        $stmt = $this->conn->prepare("CALL insert_beer(?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $this->conn->prepare("CALL insert_beer(?, ?, ?, ?, ?, ?, ?, @output)");
 
         if (!$stmt)
             throw new \Exception($this->conn->error);

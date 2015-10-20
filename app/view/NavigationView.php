@@ -15,7 +15,7 @@ class NavigationView {
      * Used to build URL for adding a beer
      * @var string
      */
-    private static $addBeerURL = "add-beer";
+    private static $addBeerID = "add_beer";
 
     /**
      * Used to build URL for updating a beer;
@@ -35,12 +35,22 @@ class NavigationView {
      */
     private static $pubID = "pub";
 
+    /**
+     * Used to build URL to view a list of pubs
+     * @var string
+     */
+    private static $pubsID = "pubs";
+
     public function getLinkToHome() {
         return "<a href='?'>Tillbaka</a>";
     }
 
     public function getLinkToAddBeer() {
-        return "<a href='?=" . self::$adminURL . "'></a>";
+        return "<a href='?" . self::$addBeerID . "'>Lägg till en öl</a>";
+    }
+
+    public function getLinkToPubList() {
+        return "<a href='?" . self::$pubsID . "'>Visa pubar/uteställen</a>";
     }
 
     public function getURLToBeer($queryString) {
@@ -57,5 +67,9 @@ class NavigationView {
 
     public function userWantsToSeeSpecificPub() {
         return isset($_GET[self::$pubID]);
+    }
+
+    public function userWantsToAddBeer() {
+        return isset($_GET[self::$addBeerID]);
     }
 }

@@ -16,7 +16,7 @@ class BeerDAL extends BaseDAL{
 
      */
 
-    private static $table = "beers"; // change when real table is setup
+    private static $table = "beers";
 
     public function __construct() {
         parent::__construct();
@@ -66,11 +66,12 @@ class BeerDAL extends BaseDAL{
     }
 
     public function addBeer(\model\Beer $beer) {
-        $stmt = $this->conn->prepare("CALL insert_beer(?, ?, ?, ?, ?, ?, ?, @output)");
+        $stmt = $this->conn->prepare("CALL insert_beer(?, ?, ?, ?, ?, ?, ?, ?)");
 
         if (!$stmt)
             throw new \Exception($this->conn->error);
 
+        $id = $beer->getId();
         $name = $beer->getName();
         $abv = $beer->getAbv();
         $manufacturer = $beer->getBrewery();
@@ -79,7 +80,7 @@ class BeerDAL extends BaseDAL{
         $volume = $beer->getVolume();
         $servingType = $beer->getServingType();
 
-        $stmt->bind_param('sdsssds', $name, $abv, $manufacturer, $imageurl, $country, $volume, $servingType);
+        $stmt->bind_param('ssdsssds', $id, $name, $abv, $manufacturer, $imageurl, $country, $volume, $servingType);
 
         $stmt->execute();
     }
@@ -99,7 +100,7 @@ class BeerDAL extends BaseDAL{
         $volume = $beer->getVolume();
         $servingType = $beer->getServingType();
 
-        $stmt->bind_param("isdsssds", $id, $name, $abv, $manufacturer, $imageurl, $country, $volume, $servingType);
+        $stmt->bind_param("ssdsssds", $id, $name, $abv, $manufacturer, $imageurl, $country, $volume, $servingType);
 
         $stmt->execute();
 

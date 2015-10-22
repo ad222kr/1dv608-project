@@ -11,7 +11,7 @@ namespace view;
 
 class HomeView implements IView{
 
-    public function render() {
+    public function response() {
         return "<p>Welcome to my app!</p>";
     }
 }

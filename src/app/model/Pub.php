@@ -1,13 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alex
- * Date: 2015-10-16
- * Time: 22:24
- */
 
 namespace model;
 
+require_once("src/common/exceptions/BeerAlreadyExistsException.php");
+require_once("src/common/exceptions/BeerDoesNotExistException.php");
 
 class Pub {
 
@@ -15,7 +11,7 @@ class Pub {
     private $name;
     private $address;
     private $webpageURL;
-    private $beers;
+    private $beers = array();
 
     public function __construct($name, $address, $webpageURL, $id=0) {
         //TODO: Add validation
@@ -24,7 +20,6 @@ class Pub {
         $this->name = $name;
         $this->address = $address;
         $this->webpageURL = $webpageURL;
-        $this->beers = array();
     }
 
 
@@ -60,10 +55,9 @@ class Pub {
     public function addBeer(Beer $toBeAdded) {
         foreach ($this->beers as $beer) {
             if ($beer->getId() == $toBeAdded->getId()){
-                throw new \Exception("Beer already exists, cannot add it again");
+                throw new \BeerAlreadyExistsException("Beer already exists, cannot add it again");
             }
         }
-        //
         $this->beers[$toBeAdded->getId()] = $beer;
     }
 
@@ -73,7 +67,7 @@ class Pub {
         if (isset($this->beers[$key]))
             return $this->beers[$key];
 
-        return null; // throw exception?
+        throw new \BeerDoesNotExistException("Beer does not exist in the database");
     }
 
     public function getBeers() {
@@ -82,6 +76,10 @@ class Pub {
 
     public function getQueryString() {
         return strtolower($this->name);
+    }
+
+    public function isSame(\model\Pub $other) {
+        return $this->id === $other->getId();
     }
 
 

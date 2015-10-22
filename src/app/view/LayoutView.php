@@ -36,13 +36,7 @@ class LayoutView  {
                     <header>
                         <h1>Hello ProjectApp</h1>
                     </header>
-                    <nav>
-                        <ul>
-                            <li>' . $this->navigationView->getLinkToHome() . '</li>
-                            <li>' . $this->navigationView->getLinkToAddBeer() . '</li>
-                            <li>' . $this->navigationView->getLinkToPubList() . '</li>
-                        </ul>
-                    </nav>
+                    ' . $this->navigationView->getNavMenu() . '
 
                     <div class="container">
                         ' . $html .'
@@ -50,7 +44,6 @@ class LayoutView  {
 
                     <footer>
                         <p>Application created for the course 1dv608 - Web development with PHP at Linneaus Univercity by Alex Driaguine</p>
-                        <p>Å Ä Ö LOL</p>
                     </footer>
 
                 </body>

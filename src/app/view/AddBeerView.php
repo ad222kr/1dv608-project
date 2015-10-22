@@ -25,9 +25,9 @@ class AddBeerView implements IView{
     private static $inputTypeNumber = "number";
 
     private static $servingTypeBottleValue = "Flaska";
-    private static $servingTypeTapValuy = "Fat";
+    private static $servingTypeTapValue = "Fat";
 
-    public function render() {
+    public function response() {
         return "<form method='post'>" .
                 $this->getTextField("Namn: ", self::$nameID, self::$inputTypeText) . "<br />" .
                 $this->getTextField("Alkoholprocent: ", self::$abvID, self::$inputTypeNumber) . "<br />" .
@@ -37,7 +37,7 @@ class AddBeerView implements IView{
 
                 "<label for='" . self::$servingTypeID . "'>Serveringstyp: </label><br />" .
                 $this->getRadioButton(self::$servingTypeID, self::$servingTypeBottleValue) . "<br />" .
-                $this->getRadioButton(self::$servingTypeID, self::$servingTypeTapValuy) . "<br />" .
+                $this->getRadioButton(self::$servingTypeID, self::$servingTypeTapValue) . "<br />" .
                 "<input type='submit' name='".self::$submitPostID."'>
                 </form>";
 
@@ -54,7 +54,6 @@ class AddBeerView implements IView{
     private function getRadioButton($name, $value) {
         return "<input type='radio' name='$name' value='$value'>$value</input>";
     }
-
 
     /**
      * Returns a $_POST-variable. Shamelessly stolen from

@@ -11,50 +11,43 @@ namespace view;
 
 class NavigationView {
 
-    /**
-     * Used to build URL for adding a beer
-     * @var string
-     */
+    private static $action = "action";
     private static $addBeerID = "add_beer";
+    private static $updateBeerID = "update_beer";
+    private static $beerID = "show_beer";
+    private static $addPubID = "add_pub";
+    private static $pubID = "show_pub";
+    private static $pubsID = "show_pubs";
 
-    /**
-     * Used to build URL for updating a beer;
-     * @var string
-     */
-    private static $updateBeerURL = "update-beer";
+    public function getNavMenu() {
+        $html  = "<nav><ul>";
+        $html .= "<li><a href='?'>Hem</a></li>";
+        $html .= "<li><a href='?".self::$action."=".self::$pubsID."'>Visa pubar</a></li>";
+        $html .= "<li><a href='?".self::$action."=".self::$addPubID."'>Lägg till pub</a></li>";
+        $html .= "</ul></nav>";
+        return $html;
 
-    /**
-     * Used to build URL to a specific beer
-     * @var string
-     */
-    private static $beerURL = "beer";
+    }
 
-    /**
-     * Used to build URL to a specific pub
-     * @var string
-     */
-    private static $pubID = "pub";
+    private function getLinkElem($hrefValue, $title) {
 
-    /**
-     * Used to build URL to view a list of pubs
-     * @var string
-     */
-    private static $pubsID = "pubs";
+    }
 
     public function getLinkToHome() {
-        return "<a href='?'>Tillbaka</a>";
+        return "<a href='?'>Hem</a>";
     }
 
     public function getLinkToAddBeer() {
         return "<a href='?" . self::$addBeerID . "'>Lägg till en öl</a>";
     }
 
+
     public function getLinkToPubList() {
         return "<a href='?" . self::$pubsID . "'>Visa pubar/uteställen</a>";
     }
 
     public function getURLToBeer($queryString) {
-        return "?" . self::$beerURL . "=$queryString";
+        return "?" . self::$beerID . "=$queryString";
     }
 
     public function getURLToPub($queryString) {
@@ -62,7 +55,7 @@ class NavigationView {
     }
 
     public function userWantsToSeeBeer() {
-        return isset($_GET[self::$beerURL]);
+        return isset($_GET[self::$beerID]);
     }
 
     public function userWantsToSeeSpecificPub() {

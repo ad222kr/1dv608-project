@@ -9,17 +9,13 @@ class Settings {
     const DATABASE_ENV_PATH = "1DV608_PROJECT_DATABASE_URL";
 
     /**
-     * Database-host. Use this if you don't want to use an enviroment variable
+     * If debug mode, throws errors from e.g. Database and shows them
+     * If not, shows an error message to the user to hide stack trace
+     * Also shows errors
      */
-    const DATABASE_HOST = "";
+    const DEBUG_MODE = TRUE;
 
-    /**
-     * Username for database. Use this if you don't want to use an
-     */
-    const DATABASE_USERNAME = "";
 
-    const DATABASE_PASSWORD = "";
 
-    const DATABASE_NAME = "";
 
 }

@@ -33,6 +33,11 @@ class MasterController {
         $navView = new \view\NavigationView();
         $layoutView = new \view\LayoutView($navView);
 
+        $pub = new \model\Pub("Test", "Test", "Test");
+        $beer = new \model\Beer("TBeer", 3.5, "tBrew", "tC", 33, "flaska");
+        $pub->addBeer($beer);
+        $pub->addBeer($beer);
+
         switch($navView->getAction()) {
             case \view\NavigationView::$showPubs:
                 $html = "Show Pubs!";

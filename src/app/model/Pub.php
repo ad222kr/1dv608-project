@@ -58,7 +58,7 @@ class Pub {
                 throw new \BeerAlreadyExistsException("Beer already exists, cannot add it again");
             }
         }
-        $this->beers[$toBeAdded->getId()] = $beer;
+        $this->beers[$toBeAdded->getId()] = $toBeAdded;
     }
 
 

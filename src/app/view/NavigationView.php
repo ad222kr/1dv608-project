@@ -19,15 +19,43 @@ class NavigationView {
     public static $addPub = "add_pub";
     public static $showPub = "show_pub";
     public static $showPubs = "show_pubs";
+    public static $home = "home";
+    public static $signIn = "sign_in";
+    public static $register = "register";
 
-    public function getNavMenu() {
-        $html  = '<ul class="nav navbar-nav navbar-right">';
-        $html .= "<li><a href='?'>Hem</a></li>";
-        $html .= "<li><a href='?".self::$action."=".self::$showPub."'>Visa pubar</a></li>";
-        $html .= "<li><a href='?".self::$action."=".self::$addPub."'>Lägg till pub</a></li>";
+
+    /**
+     * Gets unordered list for the <nav> thats on the left side
+     * @return string
+     */
+    public function getLeftNavMenu() {
+        $html  = '<ul class="nav navbar-nav">';
+        $html .= "<li ". $this->isActiveClass(self::$home) ."><a href='?'>Hem</a></li>";
+        $html .= "<li ". $this->isActiveClass(self::$showPubs) ."><a href='?".self::$action."=".self::$showPubs."'>Visa pubar</a></li>";
         $html .= "</ul>";
         return $html;
 
+    }
+
+    /**
+     * Gets unordered list for the <nav> thats on the right side
+     * Login and register
+     * @return string
+     */
+    public function getRightNavMenu() {
+        $html  = '<ul class="nav navbar-nav navbar-right">';
+        $html .= "<li ". $this->isActiveClass(self::$signIn) ."><a href='?".self::$action."=".self::$signIn."'>Logga in</a></li>";
+        $html .= "<li ". $this->isActiveClass(self::$register) ."><a href='?".self::$action."=".self::$register."'>Registrera</a></li>";
+        $html .= "</ul>";
+        return $html;
+    }
+
+
+    public function isActiveClass($actionName) {
+        $currentAction = $this->getAction();
+        if($currentAction === $actionName){
+            return 'class="active"';
+        }
     }
 
     /**
@@ -38,28 +66,13 @@ class NavigationView {
         if (isset($_GET[self::$action]))
             return $_GET[self::$action];
 
-        return ""; // return empty string, switch takes care on default to show homepage
-
-
+        return self::$home; // return empty string, switch takes care on default to show homepage
     }
 
-    private function getURLToBeer($queryString) {
-        return "?" . self::$showBeer . "=$queryString";
+    public function reloadPage() {
+        header("Location: " . $_SERVER['REQUEST_URI']);
+        exit();
     }
 
-    private function getURLToPub($queryString) {
-        return "?" . self::$showPub . "=$queryString";
-    }
 
-    public function userWantsToSeeBeer() {
-        return isset($_GET[self::$showBeer]);
-    }
-
-    public function userWantsToSeeSpecificPub() {
-        return isset($_GET[self::$showPub]);
-    }
-
-    public function userWantsToAddBeer() {
-        return isset($_GET[self::$addBeer]);
-    }
 }

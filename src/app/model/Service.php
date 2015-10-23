@@ -17,6 +17,8 @@ class Service {
 
     private $beerDAL;
     private $pubDAL;
+    private $userDAL;
+    private $tempDAL;
 
     public function __construct() {
         $this->beerDAL = new BeerDAL();

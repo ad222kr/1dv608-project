@@ -9,7 +9,7 @@
 namespace controller;
 
 
-class BeerController {
+class BeerController implements IController {
 
     private $view;
 

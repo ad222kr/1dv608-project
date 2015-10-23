@@ -2,7 +2,6 @@
 
 namespace controller;
 
-require_once("src/app/view/IView.php");
 require_once("src/app/model/Service.php");
 require_once("config/Settings.php");
 require_once("src/app/model/Beer.php");
@@ -10,8 +9,15 @@ require_once("src/app/model/Pub.php");
 require_once("src/app/view/AddBeerView.php");
 require_once("src/app/view/HomeView.php");
 require_once("src/app/controller/BeerController.php");
+require_once("src/app/controller/PubController.php");
 require_once("src/app/view/NavigationView.php");
 require_once("src/app/view/LayoutView.php");
+require_once("src/app/view/PubView.php");
+
+
+
+//TODO: move exception requires to classes that use them.
+//TODO: try to implement autoloader if time allows.
 
 /**
  * Class MasterController
@@ -22,21 +28,12 @@ require_once("src/app/view/LayoutView.php");
 
 class MasterController {
 
-    private $navView;
-    private $layoutView;
-
-    public function __construct() {
-        $this->navView = new \view\NavigationView();
-        $this->layoutView = new \view\LayoutView($this->navView);
-    }
-
     public function run() {
 
-        $beer = new \model\Beer("Punk IPA", 5.6, "Brewdog", "Skottland", 33, "Flaska");
-        $bDAL = new \model\BeerDAL();
-        $bDAL->addBeer($beer);
+        $navView = new \view\NavigationView();
+        $layoutView = new \view\LayoutView($navView);
 
-        switch($this->navView->getAction()) {
+        switch($navView->getAction()) {
             case \view\NavigationView::$showPubs:
                 $html = "Show Pubs!";
                 //todo: Show pubs
@@ -49,6 +46,7 @@ class MasterController {
                 $html = "Add Pub!";
                 //todo: add pub
                 break;
+            /*
             case \view\NavigationView::$showBeer:
                 $html = "Show Beer";
                 //todo: show beer
@@ -61,17 +59,14 @@ class MasterController {
             case \view\NavigationView::$updateBeer:
                 $html = "update beer!";
                 //todo: update beer;
-                break;
+                break; */
             default:
+                // No need for a controller here, just show "homepage"
                 $view = new \view\HomeView();
                 $html = $view->response();
-
+                break;
         }
 
-
-
-
-        $this->layoutView->render($html);
-
+        $layoutView->render($html);
     }
 }

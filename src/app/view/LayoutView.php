@@ -9,6 +9,8 @@ namespace view;
  */
 class LayoutView  {
 
+    private $cssOff = false; // just debug, cant see var_dump sometimes cus of bootstrap...
+
     /**
      * Title of the application
      * @var string
@@ -16,6 +18,7 @@ class LayoutView  {
     private static $title = "AppYo";
     private static $css = array(
         "bootstrap" => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css",
+        "bootstrap-theme" => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css",
         "site" => "css/site.css"
 
     );
@@ -30,6 +33,7 @@ class LayoutView  {
     }
 
     private function loadCss() {
+        if ($this->cssOff) return; //debug remove later
         $ret = "";
         foreach (self::$css as $styleSheet) {
             $ret .= '<link rel="stylesheet" href="' . $styleSheet . '">';
@@ -50,7 +54,7 @@ class LayoutView  {
                 </head>
                 <body>
 
-                    <nav class="navbar navbar-default navbar-fixed-top">
+                    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
                       <div class="container">
                         <div class="navbar-header">
                           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -61,8 +65,9 @@ class LayoutView  {
                           </button>
                           <a class="navbar-brand" href="?">' . self::$title .'</a>
                         </div>
-                        <div id="navbar" class="navbar-collapse collapse">
-                          ' . $this->navigationView->getNavMenu() . '
+                        <div id="navbar" class="navbar-collapse collapse" >
+                          ' . $this->navigationView->getLeftNavMenu() .
+                              $this->navigationView->getRightNavMenu(). '
                         </div>
                       </div>
                     </nav>

@@ -2,8 +2,7 @@
 
 namespace model;
 
-require_once("src/common/exceptions/BeerAlreadyExistsException.php");
-require_once("src/common/exceptions/BeerDoesNotExistException.php");
+
 
 class Pub {
 

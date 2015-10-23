@@ -14,6 +14,9 @@ require_once("src/app/view/NavigationView.php");
 require_once("src/app/view/LayoutView.php");
 require_once("src/app/view/PubView.php");
 
+require_once("src/common/exceptions/BeerAlreadyExistsException.php");
+require_once("src/common/exceptions/BeerDoesNotExistException.php");
+
 
 
 //TODO: move exception requires to classes that use them.

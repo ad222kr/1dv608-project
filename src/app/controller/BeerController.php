@@ -14,7 +14,7 @@ class BeerController {
     private $view;
 
     public function __construct(\view\IView $view) {
-        $this->$view = $view;
+        $this->view = $view;
     }
 
     public function doControl () {

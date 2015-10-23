@@ -12,57 +12,54 @@ namespace view;
 class NavigationView {
 
     private static $action = "action";
-    private static $addBeerID = "add_beer";
-    private static $updateBeerID = "update_beer";
-    private static $beerID = "show_beer";
-    private static $addPubID = "add_pub";
-    private static $pubID = "show_pub";
-    private static $pubsID = "show_pubs";
+
+    public static $addBeer = "add_beer";
+    public static $updateBeer = "update_beer";
+    public static $showBeer = "show_beer";
+    public static $addPub = "add_pub";
+    public static $showPub = "show_pub";
+    public static $showPubs = "show_pubs";
 
     public function getNavMenu() {
-        $html  = "<nav><ul>";
+        $html  = '<ul class="nav navbar-nav navbar-right">';
         $html .= "<li><a href='?'>Hem</a></li>";
-        $html .= "<li><a href='?".self::$action."=".self::$pubsID."'>Visa pubar</a></li>";
-        $html .= "<li><a href='?".self::$action."=".self::$addPubID."'>Lägg till pub</a></li>";
-        $html .= "</ul></nav>";
+        $html .= "<li><a href='?".self::$action."=".self::$showPub."'>Visa pubar</a></li>";
+        $html .= "<li><a href='?".self::$action."=".self::$addPub."'>Lägg till pub</a></li>";
+        $html .= "</ul>";
         return $html;
 
     }
 
-    private function getLinkElem($hrefValue, $title) {
+    /**
+     * Checks the $_GET-var "action". If not set to anything, return "home";
+     * @return string
+     */
+    public function getAction() {
+        if (isset($_GET[self::$action]))
+            return $_GET[self::$action];
+
+        return ""; // return empty string, switch takes care on default to show homepage
+
 
     }
 
-    public function getLinkToHome() {
-        return "<a href='?'>Hem</a>";
+    private function getURLToBeer($queryString) {
+        return "?" . self::$showBeer . "=$queryString";
     }
 
-    public function getLinkToAddBeer() {
-        return "<a href='?" . self::$addBeerID . "'>Lägg till en öl</a>";
-    }
-
-
-    public function getLinkToPubList() {
-        return "<a href='?" . self::$pubsID . "'>Visa pubar/uteställen</a>";
-    }
-
-    public function getURLToBeer($queryString) {
-        return "?" . self::$beerID . "=$queryString";
-    }
-
-    public function getURLToPub($queryString) {
-        return "?" . self::$pubID . "=$queryString";
+    private function getURLToPub($queryString) {
+        return "?" . self::$showPub . "=$queryString";
     }
 
     public function userWantsToSeeBeer() {
-        return isset($_GET[self::$beerID]);
+        return isset($_GET[self::$showBeer]);
     }
 
     public function userWantsToSeeSpecificPub() {
-        return isset($_GET[self::$pubID]);
+        return isset($_GET[self::$showPub]);
     }
 
     public function userWantsToAddBeer() {
-        return isset($_GET[self::$addBeerID]);
+        return isset($_GET[self::$addBeer]);
     }
 }

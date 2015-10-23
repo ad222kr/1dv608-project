@@ -2,7 +2,7 @@
 
 namespace controller;
 
-
+require_once("src/app/view/IView.php");
 require_once("src/app/model/Service.php");
 require_once("config/Settings.php");
 require_once("src/app/model/Beer.php");
@@ -22,26 +22,56 @@ require_once("src/app/view/LayoutView.php");
 
 class MasterController {
 
+    private $navView;
+    private $layoutView;
+
+    public function __construct() {
+        $this->navView = new \view\NavigationView();
+        $this->layoutView = new \view\LayoutView($this->navView);
+    }
+
     public function run() {
-        $navView = new \view\NavigationView();
-        $layoutView = new \view\LayoutView($navView);
 
         $beer = new \model\Beer("Punk IPA", 5.6, "Brewdog", "Skottland", 33, "Flaska");
         $bDAL = new \model\BeerDAL();
         $bDAL->addBeer($beer);
 
-        if ($navView->userWantsToAddBeer()) {
-            $view = new \view\AddBeerView();
-            $controller = new \controller\BeerController($view);
-            $html = $controller->getView()->response();
+        switch($this->navView->getAction()) {
+            case \view\NavigationView::$showPubs:
+                $html = "Show Pubs!";
+                //todo: Show pubs
+                break;
+            case \view\NavigationView::$showPub:
+                $html = "Show Pub!";
+                //todo: Show pub
+                break;
+            case \view\NavigationView::$addPub:
+                $html = "Add Pub!";
+                //todo: add pub
+                break;
+            case \view\NavigationView::$showBeer:
+                $html = "Show Beer";
+                //todo: show beer
+                break;
+            case \view\NavigationView::$addBeer:
+                $view = new \view\AddBeerView();
+                $controller = new \controller\BeerController($view);
+                $html = $controller->getView()->response();
+                break;
+            case \view\NavigationView::$updateBeer:
+                $html = "update beer!";
+                //todo: update beer;
+                break;
+            default:
+                $view = new \view\HomeView();
+                $html = $view->response();
 
-        } else {
-            $view = new \view\HomeView();
-            $html = $view->response();
         }
 
 
-        $layoutView->render($html);
+
+
+        $this->layoutView->render($html);
 
     }
 }

@@ -14,6 +14,11 @@ class LayoutView  {
      * @var string
      */
     private static $title = "AppYo";
+    private static $css = array(
+        "bootstrap" => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css",
+        "site" => "css/site.css"
+
+    );
 
     /**
      * @var NavigationView
@@ -24,26 +29,55 @@ class LayoutView  {
         $this->navigationView = $navigationView;
     }
 
+    private function loadCss() {
+        $ret = "";
+        foreach (self::$css as $styleSheet) {
+            $ret .= '<link rel="stylesheet" href="' . $styleSheet . '">';
+        }
+        return $ret;
+    }
+
     public function render($html) {
 
         echo '<!DOCTYPE html>
             <html>
                 <head>
                     <meta charset="UTF-8">
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    <meta name="viewport" content="width=device-width, initial-scale=1">
                     <title>' . self::$title . '</title>
+                    ' . $this->loadCss() .'
                 </head>
                 <body>
-                    <header>
-                        <h1>Hello ProjectApp</h1>
-                    </header>
-                    ' . $this->navigationView->getNavMenu() . '
+
+                    <nav class="navbar navbar-default navbar-fixed-top">
+                      <div class="container">
+                        <div class="navbar-header">
+                          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                          </button>
+                          <a class="navbar-brand" href="?">' . self::$title .'</a>
+                        </div>
+                        <div id="navbar" class="navbar-collapse collapse">
+                          ' . $this->navigationView->getNavMenu() . '
+                        </div>
+                      </div>
+                    </nav>
+
 
                     <div class="container">
+
                         ' . $html .'
+
                     </div>
 
-                    <footer>
-                        <p>Application created for the course 1dv608 - Web development with PHP at Linneaus Univercity by Alex Driaguine</p>
+                    <footer class="footer">
+                        <div class="container">
+                            <p class="text-muted">Application created for the course 1DV608 - Web development with php.</p>
+                        </div>
                     </footer>
 
                 </body>

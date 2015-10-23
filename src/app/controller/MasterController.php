@@ -46,7 +46,7 @@ class MasterController {
                 $html = "Add Pub!";
                 //todo: add pub
                 break;
-            /*
+
             case \view\NavigationView::$showBeer:
                 $html = "Show Beer";
                 //todo: show beer
@@ -59,7 +59,14 @@ class MasterController {
             case \view\NavigationView::$updateBeer:
                 $html = "update beer!";
                 //todo: update beer;
-                break; */
+                break;
+            case \view\NavigationView::$register:
+                $html = "register";
+                //todo: fix register
+                break;
+            case \view\NavigationView::$signIn:
+                $html = "login";
+                //todo: fix login
             default:
                 // No need for a controller here, just show "homepage"
                 $view = new \view\HomeView();

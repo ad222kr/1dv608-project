@@ -66,7 +66,7 @@ class Pub {
         if (isset($this->beers[$key]))
             return $this->beers[$key];
 
-        throw new \BeerDoesNotExistException("Beer does not exist in the database");
+        //throw new \BeerDoesNotExistException("Beer does not exist in the database");
     }
 
     public function getBeers() {

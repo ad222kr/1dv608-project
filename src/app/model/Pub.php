@@ -54,7 +54,7 @@ class Pub {
     public function addBeer(Beer $toBeAdded) {
         foreach ($this->beers as $beer) {
             if ($beer->getId() == $toBeAdded->getId()){
-                throw new \BeerAlreadyExistsException("Beer already exists, cannot add it again");
+                //throw new \BeerAlreadyExistsException("Beer already exists, cannot add it again");
             }
         }
         $this->beers[$toBeAdded->getId()] = $toBeAdded;

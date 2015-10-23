@@ -4,6 +4,8 @@
 require_once("src/app/controller/IController.php");
 require_once("src/app/view/IView.php");
 require_once("src/app/controller/MasterController.php");
+require_once("src/common/exceptions/BeerAlreadyExistsException.php");
+require_once("src/common/exceptions/BeerDoesNotExistException.php");
 
 if (Settings::DEBUG_MODE) {
     error_reporting(E_ALL);

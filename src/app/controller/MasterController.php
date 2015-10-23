@@ -13,6 +13,7 @@ require_once("src/app/controller/PubController.php");
 require_once("src/app/view/NavigationView.php");
 require_once("src/app/view/LayoutView.php");
 require_once("src/app/view/PubView.php");
+require_once("src/app/view/AddBeerView.php");
 
 //TODO: move exception requires to classes that use them.
 //TODO: try to implement autoloader if time allows.
@@ -34,7 +35,7 @@ class MasterController {
         $pub = new \model\Pub("Test", "Test", "Test");
         $beer = new \model\Beer("TBeer", 3.5, "tBrew", "tC", 33, "flaska");
         $pub->addBeer($beer);
-        $pub->addBeer($beer);
+
 
         switch($navView->getAction()) {
             case \view\NavigationView::$showPubs:

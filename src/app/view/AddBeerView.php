@@ -9,7 +9,7 @@
 namespace view;
 
 
-class AddBeerFormView implements IView{
+class AddBeerView implements IView{
 
     private static $nameID = "AddBeerView::Name";
     private static $abvID = "AddBeerView::Abv";

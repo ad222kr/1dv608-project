@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alex
- * Date: 2015-10-17
- * Time: 12:21
- */
 
 namespace model;
 
@@ -17,8 +11,6 @@ class Service {
 
     private $beerDAL;
     private $pubDAL;
-    private $userDAL;
-    private $tempDAL;
 
     public function __construct() {
         $this->beerDAL = new BeerDAL();
@@ -46,6 +38,11 @@ class Service {
 
     private function getBeerCatalog() {
         //TODO: get relation-table
+    }
+
+    public function closeConnection() {
+        $this->beerDAL->close();
+        $this->pubDAL->close();
     }
 
 

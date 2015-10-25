@@ -54,4 +54,8 @@ abstract class BaseDAL {
 
     }
 
+    public function close() {
+        $this->conn->close();
+    }
+
 }

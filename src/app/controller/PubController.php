@@ -14,8 +14,8 @@ class PubController implements IController {
     private $pubView;
     private $navView;
 
-    public function __construct(\view\AddPubView $pubView, \view\NavigationView $navView) {
-        $this->pubView = $pubView;
+    public function __construct(\view\IView $view, \view\NavigationView $navView) {
+        $this->pubView = $view;
         $this->navView = $navView;
     }
 

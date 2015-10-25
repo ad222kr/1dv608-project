@@ -15,7 +15,7 @@ class Pub {
     private $webpageURL;
     private $beers = array();
 
-    public function __construct($name, $address, $webpageURL, $id=0) {
+    public function __construct($id, $name, $address, $webpageURL) {
         //TODO: Add validation
 
         $this->id = $id;

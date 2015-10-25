@@ -2,6 +2,10 @@
 
 namespace controller;
 
+use model\Service;
+use view\LayoutView;
+use view\NavigationView;
+
 require_once("src/app/view/BaseFormView.php");
 
 require_once("src/app/model/Service.php");
@@ -41,19 +45,37 @@ require_once("src/app/view/AddBeerView.php");
 
 class MasterController {
 
+    /**
+     * @var NavigationView
+     */
+    private $navView;
+
+    /**
+     * @var LayoutView
+     */
+    private $layoutView;
+
+    /**
+     * Talks to the DAL
+     * @var Service
+     */
+    private $service;
+
+    public function __construct() {
+        $this->navView = new NavigationView();
+        $this->layoutView = new LayoutView($this->navView);
+        $this->service = new Service();
+    }
+
     public function run() {
 
-        $navView = new \view\NavigationView();
-        $layoutView = new \view\LayoutView($navView);
-
-        switch($navView->getAction()) {
+        switch($this->navView->getAction()) {
             case \view\NavigationView::$showAllPubs:
                 $html = "Show Pubs!";
                 //todo: Show pubs
                 break;
             case \view\NavigationView::$showPub:
-                $html = "Show Pub!";
-                //todo: Show pub
+                $controller = new PubController()
                 break;
             case \view\NavigationView::$addPub:
                 $html = "Add Pub!";
@@ -83,6 +105,6 @@ class MasterController {
 
         }
 
-        $layoutView->render($html);
+        $this->layoutView->render($html);
     }
 }

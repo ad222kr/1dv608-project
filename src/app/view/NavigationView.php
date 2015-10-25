@@ -21,6 +21,7 @@ class NavigationView {
     public static $showAllPubs = "show_pubs";
     public static $signIn = "sign_in";
     public static $register = "register";
+    public static $pubID = "pub_id";
 
 
     /**
@@ -65,6 +66,10 @@ class NavigationView {
             return $_GET[self::$action];
 
         return self::$showAllPubs; // return empty string, switch takes care on default to show homepage
+    }
+
+    public function getURLToPub($pubId) {
+        return "?".self::$action."=".self::$showPub."&".self::$pubID."=".$pubId;
     }
 
     public function reloadPage() {

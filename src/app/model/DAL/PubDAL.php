@@ -29,12 +29,14 @@ class PubDAL extends BaseDAL {
         $stmt->bind_result($id, $name, $address, $webpageURL);
 
         //TODO: Not return array
-        $ret = array();
+        $pubs = new PubRepository();
+
+
         while ($stmt->fetch()) {
-            $ret[] = new Pub($name, $address, $webpageURL, $id);
+            $pubs->add(new Pub($id, $name, $address, $webpageURL));
         }
 
-        return $ret;
+        return $pubs;
 
     }
 

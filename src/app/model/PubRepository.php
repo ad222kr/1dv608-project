@@ -2,6 +2,8 @@
 
 namespace model;
 require_once("src/app/common/exceptions/PubAlreadyExistsException.php");
+require_once("src/app/common/exceptions/PubDoesNotExistsException.php");
+
 
 class PubRepository {
 
@@ -13,6 +15,18 @@ class PubRepository {
                 throw new \PubAlreadyExistsException("Pub already exists");
         }
         $pubs[$toBeAdded->getId()] = $toBeAdded;
+    }
+
+    public function getPubs() {
+        return $this->pubs;
+    }
+
+    public function getPubFromID($uniqueID) {
+        if (isset($this->pubs[$uniqueID]))
+            return $this->pubs[$uniqueID];
+
+        throw new \PubDoesNotExistsException();
+
     }
 
 }

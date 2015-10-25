@@ -9,8 +9,9 @@
 namespace view;
 
 
-class PubFormView {
+class AddPubView extends BaseFormView implements IView{
 
+    public function response() {
 
-
+    }
 }

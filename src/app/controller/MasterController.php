@@ -2,17 +2,31 @@
 
 namespace controller;
 
+require_once("src/app/view/BaseFormView.php");
+
 require_once("src/app/model/Service.php");
+
 require_once("config/Settings.php");
+
 require_once("src/app/model/Beer.php");
+
 require_once("src/app/model/Pub.php");
+
+
 require_once("src/app/view/AddBeerView.php");
-require_once("src/app/view/HomeView.php");
+
+
+
 require_once("src/app/controller/BeerController.php");
+
 require_once("src/app/controller/PubController.php");
+
 require_once("src/app/view/NavigationView.php");
+
 require_once("src/app/view/LayoutView.php");
-require_once("src/app/view/PubView.php");
+
+require_once("src/app/view/AddPubView.php");
+
 require_once("src/app/view/AddBeerView.php");
 
 //TODO: move exception requires to classes that use them.
@@ -32,13 +46,8 @@ class MasterController {
         $navView = new \view\NavigationView();
         $layoutView = new \view\LayoutView($navView);
 
-        $pub = new \model\Pub("Test", "Test", "Test");
-        $beer = new \model\Beer("TBeer", 3.5, "tBrew", "tC", 33, "flaska");
-        $pub->addBeer($beer);
-
-
         switch($navView->getAction()) {
-            case \view\NavigationView::$showPubs:
+            case \view\NavigationView::$showAllPubs:
                 $html = "Show Pubs!";
                 //todo: Show pubs
                 break;
@@ -71,11 +80,7 @@ class MasterController {
             case \view\NavigationView::$signIn:
                 $html = "login";
                 //todo: fix login
-            default:
-                // No need for a controller here, just show "homepage"
-                $view = new \view\HomeView();
-                $html = $view->response();
-                break;
+
         }
 
         $layoutView->render($html);

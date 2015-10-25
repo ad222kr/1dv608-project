@@ -3,6 +3,9 @@
 namespace model;
 
 
+require_once("src/app/common/exceptions/BeerAlreadyExistsException.php");
+require_once("src/app/common/exceptions/BeerDoesNotExistException.php");
+
 
 class Pub {
 
@@ -20,7 +23,6 @@ class Pub {
         $this->address = $address;
         $this->webpageURL = $webpageURL;
     }
-
 
     /**
      * @return int
@@ -55,7 +57,7 @@ class Pub {
         foreach ($this->beers as $beer) {
             if ($beer->getId() == $toBeAdded->getId()){
                 // heroku dont like :(
-                //throw new \BeerAlreadyExistsException("Beer already exists, cannot add it again");
+                throw new \BeerAlreadyExistsException("Beer already exists, cannot add it again");
             }
         }
         $this->beers[$toBeAdded->getId()] = $toBeAdded;
@@ -68,7 +70,7 @@ class Pub {
             return $this->beers[$key];
 
         // heroku dont like
-        //throw new \BeerDoesNotExistException("Beer does not exist in the database");
+        throw new \BeerDoesNotExistException("Beer does not exist in the database");
     }
 
     public function getBeers() {

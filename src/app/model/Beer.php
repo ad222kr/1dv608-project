@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alex
- * Date: 2015-10-15
- * Time: 19:50
- */
 
 namespace model;
-
 
 class Beer {
 

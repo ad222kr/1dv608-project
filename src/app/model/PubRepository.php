@@ -1,8 +1,7 @@
 <?php
 
-
 namespace model;
-
+require_once("src/app/common/exceptions/PubAlreadyExistsException.php");
 
 class PubRepository {
 

@@ -18,8 +18,7 @@ class NavigationView {
     public static $showBeer = "show_beer";
     public static $addPub = "add_pub";
     public static $showPub = "show_pub";
-    public static $showPubs = "show_pubs";
-    public static $home = "home";
+    public static $showAllPubs = "show_pubs";
     public static $signIn = "sign_in";
     public static $register = "register";
 
@@ -30,8 +29,7 @@ class NavigationView {
      */
     public function getLeftNavMenu() {
         $html  = '<ul class="nav navbar-nav">';
-        $html .= "<li ". $this->isActiveClass(self::$home) ."><a href='?'>Hem</a></li>";
-        $html .= "<li ". $this->isActiveClass(self::$showPubs) ."><a href='?".self::$action."=".self::$showPubs."'>Visa pubar</a></li>";
+        $html .= "<li ". $this->isActiveClass(self::$showAllPubs) ."><a href='?".self::$action."=".self::$showAllPubs."'>Visa pubar</a></li>";
         $html .= "</ul>";
         return $html;
 
@@ -66,7 +64,7 @@ class NavigationView {
         if (isset($_GET[self::$action]))
             return $_GET[self::$action];
 
-        return self::$home; // return empty string, switch takes care on default to show homepage
+        return self::$showAllPubs; // return empty string, switch takes care on default to show homepage
     }
 
     public function reloadPage() {

@@ -1,15 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alex
- * Date: 2015-10-19
- * Time: 14:37
- */
 
 namespace view;
 
 
-class AddBeerView implements IView{
+class AddBeerView extends BaseFormView implements IView{
 
     private static $nameID = "AddBeerView::Name";
     private static $abvID = "AddBeerView::Abv";
@@ -40,31 +34,7 @@ class AddBeerView implements IView{
                 $this->getRadioButton(self::$servingTypeID, self::$servingTypeTapValue) . "<br />" .
                 "<input type='submit' name='".self::$submitPostID."'>
                 </form>";
-
-
     }
 
-    private function getTextField($title, $name, $type) {
-        $value = $this->getPostField($name);
 
-        return "<label for='$name'>$title: </label>
-                <input id='$name' type='$type' value='$value' name='$name' />";
-    }
-
-    private function getRadioButton($name, $value) {
-        return "<input type='radio' name='$name' value='$value'>$value</input>";
-    }
-
-    /**
-     * Returns a $_POST-variable. Shamelessly stolen from
-     * https://github.com/dntoll/1DV608/blob/master/lectures/LectureCode/view/AdminView.php#L68
-     * @param $field
-     * @return string
-     */
-    private function getPostField($field) {
-        if (isset($_POST[$field])) {
-            return trim($_POST[$field]);
-        }
-        return "";
-    }
 }

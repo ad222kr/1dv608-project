@@ -43,4 +43,20 @@ class PubDAL extends BaseDAL {
 
     }
 
+    public function getPubByID($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM " . self::$table . "WHERE pubid=?");
+        $stmt->bind_param("s", $id);
+        if (!$stmt) {
+            throw new \Exception($this->conn->error);
+        }
+
+        $stmt->execute();
+
+        $stmt->bind_result($id, $name, $address, $webpageURL);
+
+        $stmt->fetch();
+
+        return new Pub($id, $name, $address, $webpageURL);
+    }
+
 }

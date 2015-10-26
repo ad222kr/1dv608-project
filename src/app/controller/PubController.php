@@ -11,17 +11,25 @@ namespace controller;
 
 class PubController implements IController {
 
-    private $view;
+    private $listPubsView;
+    private $pubView = null;
     private $navView;
+    private $pubs;
 
-    public function __construct(\view\IView $view, \view\NavigationView $navView) {
-        $this->view = $view;
+    public function __construct(\view\ListPubsView $listPubsView, \view\NavigationView $navView, \model\PubRepository $pubs) {
         $this->navView = $navView;
+        $this->pubs = $pubs;
+        $this->$listPubsView = $listPubsView;
     }
 
 
     public function doControl() {
-
+        if ($this->navView->userWantsToSeePub()) {
+            $selectedPub = new \view\PubView();
+        } else {
+            // show all pubs
+            $view = new \view\ListPubsView($this->pubs, $this->navView);
+        }
     }
 
     public function getView() {

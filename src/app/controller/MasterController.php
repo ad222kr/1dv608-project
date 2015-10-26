@@ -2,35 +2,17 @@
 
 namespace controller;
 
-use model\Service;
-use view\LayoutView;
-use view\NavigationView;
-
 require_once("src/app/view/BaseFormView.php");
-
 require_once("src/app/model/Service.php");
-
 require_once("config/Settings.php");
-
 require_once("src/app/model/Beer.php");
-
 require_once("src/app/model/Pub.php");
-
-
 require_once("src/app/view/AddBeerView.php");
-
-
-
 require_once("src/app/controller/BeerController.php");
-
 require_once("src/app/controller/PubController.php");
-
 require_once("src/app/view/NavigationView.php");
-
 require_once("src/app/view/LayoutView.php");
-
 require_once("src/app/view/AddPubView.php");
-
 require_once("src/app/view/AddBeerView.php");
 require_once("src/app/view/ListPubsView.php");
 
@@ -63,23 +45,19 @@ class MasterController {
     private $service;
 
     public function __construct() {
-        $this->navView = new NavigationView();
-        $this->layoutView = new LayoutView($this->navView);
-        $this->service = new Service();
+        $this->navView = new \view\NavigationView();
+        $this->layoutView = new \view\LayoutView($this->navView);
+        $this->service = new \model\Service();
     }
 
     public function run() {
 
         switch($this->navView->getAction()) {
-            case \view\NavigationView::$showAllPubs:
-                $view = new \view\ListPubsView($this->service->getPubs(), $this->navView);
-                $controller = new PubController($view, $this->navView);
-                $controller->doControl();
-                $html = $controller->getView()->response();
+            case \view\NavigationView::$showPubs:
+                $pubs = $this->service->getPubs();
+                $pubController = new \controller\PubController($this->navView, $pubs);
 
-                break;
-            case \view\NavigationView::$showPub:
-
+                $html = $pubController->getView()->response();
                 break;
             case \view\NavigationView::$addPub:
                 $html = "Add Pub!";

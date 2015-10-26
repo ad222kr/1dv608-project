@@ -17,11 +17,11 @@ class NavigationView {
     public static $updateBeer = "update_beer";
     public static $showBeer = "show_beer";
     public static $addPub = "add_pub";
-    public static $showPub = "show_pub";
-    public static $showAllPubs = "show_pubs";
+    public static $showPubs = "show_pubs";
     public static $signIn = "sign_in";
     public static $register = "register";
     public static $pubID = "pub_id";
+    public static $beerID = "beer_id";
 
 
     /**
@@ -30,7 +30,7 @@ class NavigationView {
      */
     public function getLeftNavMenu() {
         $html  = '<ul class="nav navbar-nav">';
-        $html .= "<li ". $this->isActiveClass(self::$showAllPubs) ."><a href='?".self::$action."=".self::$showAllPubs."'>Visa pubar</a></li>";
+        $html .= "<li ". $this->isActiveClass(self::$showPubs) ."><a href='?".self::$action."=".self::$showPubs."'>Visa pubar</a></li>";
         $html .= "</ul>";
         return $html;
 
@@ -65,11 +65,15 @@ class NavigationView {
         if (isset($_GET[self::$action]))
             return $_GET[self::$action];
 
-        return self::$showAllPubs;
+        return self::$showPubs;
+    }
+
+    public function userWantsToSeePub() {
+
     }
 
     public function getURLToPub($pubId) {
-        return "?".self::$action."=".self::$showPub."&".self::$pubID."=".$pubId;
+        return "?".self::$action."=".self::$showPubs."&".self::$pubID."=".$pubId;
     }
 
     public function reloadPage() {

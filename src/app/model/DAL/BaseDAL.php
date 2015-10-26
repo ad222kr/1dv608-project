@@ -53,9 +53,4 @@ abstract class BaseDAL {
         return $mysqli;
 
     }
-
-    public function close() {
-        $this->conn->close();
-    }
-
 }

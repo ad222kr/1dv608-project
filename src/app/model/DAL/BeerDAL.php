@@ -30,42 +30,21 @@ class BeerDAL extends BaseDAL{
         if (!$stmt) {
             throw new \Exception($this->conn->error);
         }
-        var_dump($stmt);
 
         $stmt->execute();
 
         $stmt->bind_result($id, $name, $abv, $manufacturer, $imageURL, $country, $volume, $servingType);
 
 
-        // TODO: not returning an array
-        $ret = array();
+
+        $ret = new BeerRepository();
 
         while ($stmt->fetch()) {
-            $ret[] = new Beer($id, $name, $abv, $manufacturer, $country, $volume, $servingType, $imageURL);
+            $ret->add(new Beer( $name, $abv, $manufacturer, $country, $volume, $servingType, $imageURL, $id));
         }
 
+        $this->conn->close();
         return $ret;
-    }
-
-    public function getBeersByPubID($pubID) {
-        $stmt = $this->conn->prepare("SELECT * FROM " . self::$table);
-
-        if (!$stmt)
-            throw new \Exception($this->conn->error);
-
-        $stmt->execute();
-
-        $stmt->bind_result($beerID, $name, $abv, $brewery, $imageURL, $country, $volume, $servingType);
-
-
-        $beers = new \model\BeerRepository();
-
-
-        while($stmt->fetch()) {
-            $beers->add(new Beer($beerID, $name, $abv, $brewery, $imageURL, $country, $volume, $servingType));
-        }
-
-        return $beers;
     }
 
     public function getBeerById($beerId) {
@@ -83,6 +62,8 @@ class BeerDAL extends BaseDAL{
 
         $stmt->bind_result($id, $name, $abv, $manufacturer, $imageURL, $country, $volume, $servingtype);
         $stmt->fetch();
+
+        $this->conn->close();
 
         return new Beer($name, $abv, $manufacturer, $country, $volume, $servingtype, $imageURL, $id);
 
@@ -106,6 +87,8 @@ class BeerDAL extends BaseDAL{
         $stmt->bind_param('ssdsssds', $id, $name, $abv, $manufacturer, $imageurl, $country, $volume, $servingType);
 
         $stmt->execute();
+
+        $this->conn->close();
     }
 
     public function updateBeer(\model\Beer $beer) {
@@ -126,6 +109,8 @@ class BeerDAL extends BaseDAL{
         $stmt->bind_param("ssdsssds", $id, $name, $abv, $manufacturer, $imageurl, $country, $volume, $servingType);
 
         $stmt->execute();
+
+        $this->conn->close();
 
     }
 

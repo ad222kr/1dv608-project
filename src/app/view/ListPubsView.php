@@ -23,7 +23,7 @@ class ListPubsView implements IView {
         $ret = "<ul>";
 
 
-        foreach ($this->pubRepository->getPubs() as $pub) {
+        foreach ($this->pubRepository->get() as $pub) {
 
 
             $id = $pub->getId();

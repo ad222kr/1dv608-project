@@ -17,7 +17,7 @@ class PubRepository {
         $this->pubs[$toBeAdded->getId()] = $toBeAdded;
     }
 
-    public function getPubs() {
+    public function get() {
         return $this->pubs;
     }
 

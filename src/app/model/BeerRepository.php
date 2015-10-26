@@ -20,12 +20,12 @@ class BeerRepository {
     public function add(\model\Beer $toBeAdded) {
         foreach($this->beers as $beer) {
             if ($beer->isSame($toBeAdded))
-                throw new \PubAlreadyExistsException("Pub already exists");
+                throw new \Exception("same beer"); // todo custom exception
         }
         $this->beers[$toBeAdded->getId()] = $toBeAdded;
     }
 
-    public function getBeers() {
+    public function get() {
         return $this->beers;
     }
 

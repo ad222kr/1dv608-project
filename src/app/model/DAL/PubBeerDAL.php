@@ -8,6 +8,9 @@
 
 namespace model;
 
+require_once("src/app/model/PubBeerRepository.php");
+require_once("src/app/model/PubBeer.php");
+
 
 class PubBeerDAL extends BaseDAL {
 
@@ -27,6 +30,15 @@ class PubBeerDAL extends BaseDAL {
 
         $stmt->bind_result($beerID, $pubID, $price);
 
+        $ret = new PubBeerRepository();
+
+        while($stmt->fetch()) {
+            $ret->add(new PubBeer($beerID, $pubID, $price));
+        }
+
+        $this->conn->close();
+
+        return $ret;
 
     }
 }

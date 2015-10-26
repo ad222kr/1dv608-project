@@ -22,7 +22,7 @@ class PubBeerRepository {
         $this->pubBeers[] = $toBeAdded;
     }
 
-    public function getPubBeers() {
+    public function get() {
         return $this->pubBeers;
     }
 

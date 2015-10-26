@@ -14,17 +14,17 @@ class PubBeer {
     private $pubID;
     private $price;
 
-    public function __construct($beerID, $pubID, $price) {
+    public function __construct( $pubID, $beerID, $price) {
         $this->beerID = $beerID;
         $this->pubID = $pubID;
         $this->price = $price;
     }
 
-    public function getBeerID() {
+    public function getBeerId() {
         return $this->beerID;
     }
 
-    public function getPubID() {
+    public function getPubId() {
         return $this->pubID;
     }
 

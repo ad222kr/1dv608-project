@@ -31,7 +31,8 @@ class PubController implements IController {
      */
     private $pubs;
 
-    public function __construct(\view\ListPubsView $listPubsView, \view\NavigationView $navView, \model\PubRepository $pubs) {
+    public function __construct(\view\ListPubsView $listPubsView, \view\NavigationView $navView,
+                                \model\PubRepository $pubs) {
         $this->navView = $navView;
         $this->pubs = $pubs;
         $this->listPubsView = $listPubsView;
@@ -48,7 +49,6 @@ class PubController implements IController {
 
     public function getView() {
         if ($this->pubView != null)
-
             return $this->pubView;
         else
             return $this->listPubsView;

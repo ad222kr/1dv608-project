@@ -22,37 +22,31 @@ class Service {
 
     public function getPubs() {
         $pubs = $this->pubDAL->getPubs();
-        $beers = $this->getBeers();
+        $beers = $this->beerDAL->getBeers();
         $pubBeers = $this->getPubBeers();
 
-        foreach($pubs as $pub) {
-            foreach($beers as $beer) {
-                foreach ($pubBeers as $pubBeer) {
-                    if ($pub->getID() === $pubBeer->getPubID() && $beer->getID() === $pubBeer->getBeerID()) {
+        // Goes through the pubs..
+        foreach($pubs->get() as $pub) {
+            // and each beer..
+            foreach($beers->get() as $beer) {
+                // lastly each "post" in the relational table
+                foreach ($pubBeers->get() as $pubBeer) {
+                    // checks for a connection between beer and pub
+                    if ($pub->getId() === $pubBeer->getPubId() && $beer->getId() === $pubBeer->getBeerId()) {
                         $beer->setPrice($pubBeer->getPrice());
                         $pub->addBeer($beer);
                     }
                 }
             }
         }
-
         return $pubs;
     }
 
-    private function getBeers() {
-        return $this->beerDAL->getBeers();
+    public function getBeers() {
+
     }
 
     private function getPubBeers() {
         return $this->pubBeerDAL->getPubBeers();
     }
-
-    public function closeConnection() {
-        $this->beerDAL->close();
-        $this->pubDAL->close();
-        $this->pubBeerDAL->close();
-    }
-
-
-
 }

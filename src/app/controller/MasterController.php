@@ -41,6 +41,8 @@ class MasterController {
      */
     private $layoutView;
 
+    private $pubListView;
+
     /**
      * Talks to the DAL
      * @var Service
@@ -78,18 +80,6 @@ class MasterController {
                 $controller = new \controller\BeerController($view);
                 $html = $controller->getView()->response();
                 break;
-            case \view\NavigationView::$updateBeer:
-                $html = "update beer!";
-                //todo: update beer;
-                break;
-            case \view\NavigationView::$register:
-                $html = "register";
-                //todo: fix register
-                break;
-            case \view\NavigationView::$signIn:
-                $html = "login";
-                //todo: fix login
-
         }
 
         $this->layoutView->render($html);

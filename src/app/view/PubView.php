@@ -29,14 +29,16 @@ class PubView implements IView {
 
 
         $html = "<div class='row'>
-                    <div class='col-xs-6 .col-md-4'>
+                    <div class='col-md-4'>
                     <h2>$name</h2>
                     <address>$address</address>
                     <a href='$webpageURL'>Gå till hemsidan</a>
                     </div>
-                    <div class='col-xs-12 .col-md-8'>
+                    <div class='col-md-8'>
+                    <h3>Öl-sortiment</h3>
                         <div class='table-responsive'>
                         <table class='table'>
+
                             ". $this->getBeerTableRows() ."
                         </table>
                         </div>
@@ -48,13 +50,16 @@ class PubView implements IView {
 
     private function getBeerTableRows() {
         $beers = $this->pub->getBeers();
-        $html = "";
+        $html = "<thead><tr><th>Namn</th><th>Bryggeri</th><th>Pris</th></thead>";
         foreach($beers as $beer) {
             $html .= "<tr>";
             $html .= "<td><a href='". $this->navView->getURLToBeer($beer->getID()) ."'>". $beer->getName() ."</a>";
+            $html .= "<td>" . $beer->getBrewery() . "</td>";
             $html .= "<td>". $beer->getPrice() ."</td>";
 
             $html .= "</tr>";
         }
+
+        return $html;
     }
 }

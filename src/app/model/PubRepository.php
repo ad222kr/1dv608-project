@@ -14,7 +14,7 @@ class PubRepository {
             if ($toBeAdded->isSame($pub))
                 throw new \PubAlreadyExistsException("Pub already exists");
         }
-        $pubs[$toBeAdded->getId()] = $toBeAdded;
+        $this->pubs[$toBeAdded->getId()] = $toBeAdded;
     }
 
     public function getPubs() {

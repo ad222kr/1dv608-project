@@ -8,10 +8,12 @@
 
 namespace model;
 
+require_once("src/app/model/PubRepository.php");
+
 
 class PubDAL extends BaseDAL {
 
-    private static $table = "pub"; // change when real table is setup
+    private static $table = "pubs"; // change when real table is setup
 
     public function __construct() {
         parent::__construct();
@@ -29,11 +31,12 @@ class PubDAL extends BaseDAL {
         $stmt->bind_result($id, $name, $address, $webpageURL);
 
         //TODO: Not return array
-        $pubs = new PubRepository();
+        $pubs = new \model\PubRepository();
 
 
         while ($stmt->fetch()) {
-            $pubs->add(new Pub($id, $name, $address, $webpageURL));
+            $pub = new Pub($id, $name, $address, $webpageURL);
+            $pubs->add($pub);
         }
 
         return $pubs;

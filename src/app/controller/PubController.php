@@ -11,11 +11,11 @@ namespace controller;
 
 class PubController implements IController {
 
-    private $pubView;
+    private $view;
     private $navView;
 
     public function __construct(\view\IView $view, \view\NavigationView $navView) {
-        $this->pubView = $view;
+        $this->view = $view;
         $this->navView = $navView;
     }
 
@@ -25,6 +25,6 @@ class PubController implements IController {
     }
 
     public function getView() {
-        // TODO: Implement getView() method.
+        return $this->view;
     }
 }

@@ -32,6 +32,7 @@ require_once("src/app/view/LayoutView.php");
 require_once("src/app/view/AddPubView.php");
 
 require_once("src/app/view/AddBeerView.php");
+require_once("src/app/view/ListPubsView.php");
 
 //TODO: move exception requires to classes that use them.
 //TODO: try to implement autoloader if time allows.
@@ -71,11 +72,14 @@ class MasterController {
 
         switch($this->navView->getAction()) {
             case \view\NavigationView::$showAllPubs:
-                $html = "Show Pubs!";
-                //todo: Show pubs
+                $view = new \view\ListPubsView($this->service->getPubs(), $this->navView);
+                $controller = new PubController($view, $this->navView);
+                $controller->doControl();
+                $html = $controller->getView()->response();
+
                 break;
             case \view\NavigationView::$showPub:
-                $controller = new PubController()
+
                 break;
             case \view\NavigationView::$addPub:
                 $html = "Add Pub!";

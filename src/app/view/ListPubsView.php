@@ -9,7 +9,7 @@
 namespace view;
 
 
-class ListBeersView implements IView {
+class ListPubsView implements IView {
 
     private $pubRepository;
     private $navView;
@@ -22,16 +22,21 @@ class ListBeersView implements IView {
     public function response() {
         $ret = "<ul>";
 
+
         foreach ($this->pubRepository->getPubs() as $pub) {
+
+
             $id = $pub->getId();
             $name = $pub->getName();
             $address = $pub->getAddress();
             $webPageURL = $pub->getWebpageURL();
             $urlToPubView = $this->navView->getURLToPub($id);
 
-            $ret .= "<li><a href='$urlToPubView'>$name</a></li>";
 
+            $ret .= "<li><a href='$urlToPubView'>$name</a></li>";
         }
+
+        $ret .= "</ul>";
 
         return $ret;
     }

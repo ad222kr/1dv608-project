@@ -56,7 +56,7 @@ class Pub {
     public function addBeer(Beer $toBeAdded) {
         foreach ($this->beers as $beer) {
             if ($beer->getId() == $toBeAdded->getId()){
-                // heroku dont like :(
+
                 throw new \BeerAlreadyExistsException("Beer already exists, cannot add it again");
             }
         }

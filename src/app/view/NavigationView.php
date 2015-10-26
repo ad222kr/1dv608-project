@@ -65,7 +65,7 @@ class NavigationView {
         if (isset($_GET[self::$action]))
             return $_GET[self::$action];
 
-        return self::$showAllPubs; // return empty string, switch takes care on default to show homepage
+        return self::$showAllPubs;
     }
 
     public function getURLToPub($pubId) {

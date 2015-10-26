@@ -11,12 +11,15 @@ namespace view;
 
 class PubView implements IView {
 
+    private $pub;
 
-
+    public function __construct(\model\Pub $pub) {
+        $this->pub = $pub;
+    }
 
 
 
     public function response() {
-
+        return "<p>This is a beer! " . $this->pub->getName() . "</p>";
     }
 }

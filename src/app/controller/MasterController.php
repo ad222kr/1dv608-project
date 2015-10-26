@@ -2,6 +2,8 @@
 
 namespace controller;
 
+use view\ListPubsView;
+
 require_once("src/app/view/BaseFormView.php");
 require_once("src/app/model/Service.php");
 require_once("config/Settings.php");
@@ -15,6 +17,7 @@ require_once("src/app/view/LayoutView.php");
 require_once("src/app/view/AddPubView.php");
 require_once("src/app/view/AddBeerView.php");
 require_once("src/app/view/ListPubsView.php");
+require_once("src/app/view/PubView.php");
 
 //TODO: move exception requires to classes that use them.
 //TODO: try to implement autoloader if time allows.
@@ -55,7 +58,9 @@ class MasterController {
         switch($this->navView->getAction()) {
             case \view\NavigationView::$showPubs:
                 $pubs = $this->service->getPubs();
-                $pubController = new \controller\PubController($this->navView, $pubs);
+                $view = new ListPubsView($pubs, $this->navView);
+                $pubController = new \controller\PubController($view, $this->navView, $pubs);
+                $pubController->doControl();
 
                 $html = $pubController->getView()->response();
                 break;

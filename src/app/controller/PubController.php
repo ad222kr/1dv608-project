@@ -11,28 +11,47 @@ namespace controller;
 
 class PubController implements IController {
 
+    /**
+     * @var ListPubsView
+     */
     private $listPubsView;
+
+    /**
+     * @var null | \view\PubView
+     */
     private $pubView = null;
+
+    /**
+     * @var \view\NavigationView
+     */
     private $navView;
+
+    /**
+     * @var \model\PubRepository
+     */
     private $pubs;
 
     public function __construct(\view\ListPubsView $listPubsView, \view\NavigationView $navView, \model\PubRepository $pubs) {
         $this->navView = $navView;
         $this->pubs = $pubs;
-        $this->$listPubsView = $listPubsView;
+        $this->listPubsView = $listPubsView;
     }
 
 
     public function doControl() {
+        var_dump($this->navView->userWantsToSeePub());
         if ($this->navView->userWantsToSeePub()) {
-            $selectedPub = new \view\PubView();
-        } else {
-            // show all pubs
-            $view = new \view\ListPubsView($this->pubs, $this->navView);
+            $selectedPub = $this->listPubsView->getSelectedPub();
+            if ($selectedPub == null) return;
+            $this->pubView = new \view\PubView($selectedPub);
         }
     }
 
     public function getView() {
-        return $this->view;
+        if ($this->pubView != null)
+
+            return $this->pubView;
+        else
+            return $this->listPubsView;
     }
 }

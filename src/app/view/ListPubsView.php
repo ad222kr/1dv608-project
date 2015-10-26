@@ -40,4 +40,20 @@ class ListPubsView implements IView {
 
         return $ret;
     }
+
+    public function getSelectedPub() {
+
+        try{
+            $id = $this->navView->getPubId();
+
+            $pub = $this->pubRepository->getPubFromID($id);
+
+
+
+            return $pub;
+        } catch (\PubDoesNotExistsException $e) {
+            echo $e->getMessage(); //TODO: flöashmessage
+        }
+
+    }
 }

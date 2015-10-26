@@ -69,11 +69,18 @@ class NavigationView {
     }
 
     public function userWantsToSeePub() {
-
+        return isset($_GET[self::$pubID]);
     }
 
     public function getURLToPub($pubId) {
         return "?".self::$action."=".self::$showPubs."&".self::$pubID."=".$pubId;
+    }
+
+    public function getPubId() {
+        if (isset($_GET[self::$pubID]))
+            return $_GET[self::$pubID];
+
+        return null;
     }
 
     public function reloadPage() {

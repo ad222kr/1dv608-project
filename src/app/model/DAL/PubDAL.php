@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alex
- * Date: 2015-10-16
- * Time: 23:02
- */
+
 
 namespace model;
 
@@ -14,6 +9,7 @@ require_once("src/app/model/PubRepository.php");
 class PubDAL extends BaseDAL {
 
     private static $table = "pubs"; // change when real table is setup
+
 
     public function __construct() {
         parent::__construct();
@@ -56,7 +52,7 @@ class PubDAL extends BaseDAL {
 
         $stmt->fetch();
 
-        return new Pub($id, $name, $address, $webpageURL);
+        return Pub($id, $name, $address, $webpageURL);
     }
 
 }

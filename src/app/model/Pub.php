@@ -65,7 +65,7 @@ class Pub {
 
 
     public function getBeer($key) {
-        // TODO:_ check for errors etc,e xception
+        // TODO:_ check for errors etc,exception
         if (isset($this->beers[$key]))
             return $this->beers[$key];
 
@@ -75,10 +75,6 @@ class Pub {
 
     public function getBeers() {
         return $this->beers;
-    }
-
-    public function getQueryString() {
-        return strtolower($this->name);
     }
 
     public function isSame(\model\Pub $other) {

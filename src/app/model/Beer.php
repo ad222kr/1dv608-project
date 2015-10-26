@@ -17,7 +17,7 @@ class Beer {
 
     //TODO: remember to remove default for price. Will get price via Join in sql. Fix nicer way of making standardUrl.
     public function __construct($name, $abv, $brewery, $country, $volume, $servingType,
-                                 $imageURL="images/user_uploaded/no_picture_beer.jpg") {
+                                 $imageURL="images/user_uploaded/no_picture_beer.jpg", $id="") {
         //TODO: Validation
         $this->name = $name;
         $this->abv = $abv;
@@ -26,7 +26,11 @@ class Beer {
         $this->country = $country;
         $this->volume = $volume;
         $this->servingType = $servingType;
-        $this->id = $this->buildUniqueID();
+        if (empty($id)) {
+            $this->id = $this->buildUniqueID();
+        } else {
+            $this->id = $id;
+        }
     }
 
     private function buildUniqueID() {
@@ -70,13 +74,12 @@ class Beer {
         return $this->abv;
     }
 
-    /**
-     * Price is set by a setter since different beers have different prices
-     * at different pubs
-     * @param double $price,
-     */
-    public function setPrice($price) {
-        $this->price = $price;
+    public function setPrice($value) {
+        $this->price = $value;
+    }
+
+    public function isSame(\model\Beer $other) {
+        return $this->id === $other->getId();
     }
 
 

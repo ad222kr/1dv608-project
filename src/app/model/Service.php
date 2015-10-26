@@ -5,44 +5,52 @@ namespace model;
 require_once("src/app/model/DAL/BaseDAL.php");
 require_once("src/app/model/DAL/PubDAL.php");
 require_once("src/app/model/DAL/BeerDAL.php");
+require_once("src/app/model/DAL/PubBeerDAL.php");
 
 
 class Service {
 
     private $beerDAL;
     private $pubDAL;
+    private $pubBeerDAL;
 
     public function __construct() {
         $this->beerDAL = new BeerDAL();
         $this->pubDAL = new PubDAL();
-    }
-
-    public function getBeerById($id) {
-        assert(is_int($id));
-        return $this->beerDAL->getBeerById($id);
-    }
-
-    public function getBeers() {
-        return $this->beerDAL->getBeers();
+        $this->pubBeerDAL = new PubBeerDAL();
     }
 
     public function getPubs() {
-        return $this->pubDAL->getPubs();
+        $pubs = $this->pubDAL->getPubs();
+        $beers = $this->getBeers();
+        $pubBeers = $this->getPubBeers();
+
+        foreach($pubs as $pub) {
+            foreach($beers as $beer) {
+                foreach ($pubBeers as $pubBeer) {
+                    if ($pub->getID() === $pubBeer->getPubID() && $beer->getID() === $pubBeer->getBeerID()) {
+                        $beer->setPrice($pubBeer->getPrice());
+                        $pub->addBeer($beer);
+                    }
+                }
+            }
+        }
+
+        return $pubs;
     }
 
-    public function getPubById($id) {
-        //TODO: populate Pub with beers that have connection via BeerCatalog here
-        assert(is_int($id));
-        return $this->pubDAL->getPubs();
+    private function getBeers() {
+        return $this->beerDAL->getBeers();
     }
 
-    private function getBeerCatalog() {
-        //TODO: get relation-table
+    private function getPubBeers() {
+        return $this->pubBeerDAL->getPubBeers();
     }
 
     public function closeConnection() {
         $this->beerDAL->close();
         $this->pubDAL->close();
+        $this->pubBeerDAL->close();
     }
 
 

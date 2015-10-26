@@ -2,6 +2,8 @@
 
 namespace model;
 
+require_once("src/app/model/BeerRepository.php");
+
 class BeerDAL extends BaseDAL{
 
     /*
@@ -39,10 +41,31 @@ class BeerDAL extends BaseDAL{
         $ret = array();
 
         while ($stmt->fetch()) {
-            $ret[] = new Beer($name, $abv, $manufacturer, $country, $volume, $servingType, $id,  $imageURL);
+            $ret[] = new Beer($id, $name, $abv, $manufacturer, $country, $volume, $servingType, $imageURL);
         }
 
         return $ret;
+    }
+
+    public function getBeersByPubID($pubID) {
+        $stmt = $this->conn->prepare("SELECT * FROM " . self::$table);
+
+        if (!$stmt)
+            throw new \Exception($this->conn->error);
+
+        $stmt->execute();
+
+        $stmt->bind_result($beerID, $name, $abv, $brewery, $imageURL, $country, $volume, $servingType);
+
+
+        $beers = new \model\BeerRepository();
+
+
+        while($stmt->fetch()) {
+            $beers->add(new Beer($beerID, $name, $abv, $brewery, $imageURL, $country, $volume, $servingType));
+        }
+
+        return $beers;
     }
 
     public function getBeerById($beerId) {
@@ -52,7 +75,7 @@ class BeerDAL extends BaseDAL{
         if (!$stmt)
             throw new \Exception($this->conn->error);
 
-        $stmt->bind_param('i', $beerId);
+        $stmt->bind_param('s', $beerId);
 
         $stmt->execute();
 

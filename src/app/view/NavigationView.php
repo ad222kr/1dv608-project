@@ -76,6 +76,10 @@ class NavigationView {
         return "?".self::$action."=".self::$showPubs."&".self::$pubID."=".$pubId;
     }
 
+    public function getURLToBeer($beerID) {
+        return "?".self::$action."=".self::$showBeer."&".self::$beerID."=".$beerID;
+    }
+
     public function getPubId() {
         if (isset($_GET[self::$pubID]))
             return $_GET[self::$pubID];

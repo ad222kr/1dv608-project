@@ -39,11 +39,10 @@ class PubController implements IController {
 
 
     public function doControl() {
-        var_dump($this->navView->userWantsToSeePub());
         if ($this->navView->userWantsToSeePub()) {
             $selectedPub = $this->listPubsView->getSelectedPub();
             if ($selectedPub == null) return;
-            $this->pubView = new \view\PubView($selectedPub);
+            $this->pubView = new \view\PubView($selectedPub, $this->navView);
         }
     }
 

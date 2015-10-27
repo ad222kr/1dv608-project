@@ -18,6 +18,20 @@ class BeerView implements IView {
     }
 
     public function response() {
-        return $this->beer->getName();
+        return $this->getBeerHTML();
+    }
+
+    private function getBeerHTML() {
+        $image = $this->beer->getImageURL();
+        $html = '<div class="row">
+                    <div class="col-md-4">
+                        <img src="'.$image .'" alt="BeerImage" class="img-circle beer-image img-responsive">
+                    </div>
+                    <div class="col-md-8">
+                        
+                    </div>
+                </div>';
+
+        return $html;
     }
 }

@@ -12,6 +12,6 @@ namespace view;
 class AdminView implements IView {
 
     public function response() {
-        // TODO: Implement response() method.
+        return "<p>DoAdmin!</p>";
     }
 }

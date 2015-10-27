@@ -79,26 +79,14 @@ class MasterController {
 
         try {
             if ($this->navView->userWantsToDoPubs()) {
+                $html = $this->doPub();
 
-                $pubs = $this->service->getPubs();
-                $listPubsView = new \view\ListPubsView($pubs, $this->navView);
-                $pubController = new \controller\PubController($listPubsView, $this->navView, $pubs);
-
-                $pubController->doControl();
-
-                $html = $pubController->getView()->response();
             } elseif ($this->navView->userWantsToSeeBeer()) {
 
-                $beerID = $this->navView->getBeerId();
-                $beer = $this->service->getBeerById($beerID);
+                $html = $this->viewBeer();
 
-
-                $beerView = new \view\BeerView($beer);
-
-                $html = $beerView->response();
             } elseif ($this->navView->userWantsToDoAdmin()) {
-                $adminView = new \view\AdminView();
-                $adminController = new \controller\AdminController($adminView);
+                $html = $this->doAdmin();
             }
 
             $this->layoutView->render($html);
@@ -114,5 +102,29 @@ class MasterController {
                 echo $e->getMessage();
             }
         }
+    }
+
+    public function doPub() {
+        $pubs = $this->service->getPubs();
+        $listPubsView = new \view\ListPubsView($pubs, $this->navView);
+        $pubController = new \controller\PubController($listPubsView, $this->navView, $pubs);
+        $pubController->doControl();
+
+        return $pubController->getView()->response();
+    }
+
+    public function viewBeer() {
+        $beerID = $this->navView->getBeerId();
+        $beer = $this->service->getBeerById($beerID);
+        $beerView = new \view\BeerView($beer);
+
+        return $beerView->response();
+    }
+
+    private function doAdmin() {
+        $adminView = new \view\AdminView();
+        $adminController = new \controller\AdminController($adminView);
+
+        return $adminController->getView()->response();
     }
 }

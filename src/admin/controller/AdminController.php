@@ -11,11 +11,17 @@ namespace controller;
 
 class AdminController implements IController {
 
+    private $adminView;
+
+    public function __construct(\view\AdminView $adminView) {
+        $this->adminView = $adminView;
+    }
+
     public function doControl() {
         // TODO: Implement doControl() method.
     }
 
     public function getView() {
-        // TODO: Implement getView() method.
+        return $this->adminView;
     }
 }

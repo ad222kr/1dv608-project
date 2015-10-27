@@ -44,7 +44,7 @@ class PubController implements IController {
     public function doControl() {
         if ($this->navView->userWantsToSeePub()) {
             $selectedPub = $this->listPubsView->getSelectedPub();
-            if ($selectedPub == null) return;
+            if ($selectedPub == null) throw new \PubDoesNotExistsException();
             $this->pubView = new \view\PubView($selectedPub, $this->navView);
         }
 

@@ -2,7 +2,7 @@
 
 namespace controller;
 
-require_once("src/app/view/BaseFormView.php");
+
 
 require_once("src/app/model/Service.php");
 
@@ -12,7 +12,6 @@ require_once("src/app/model/Beer.php");
 
 require_once("src/app/model/Pub.php");
 
-require_once("src/app/view/AddBeerView.php");
 
 require_once("src/app/controller/PubController.php");
 
@@ -20,15 +19,27 @@ require_once("src/app/view/NavigationView.php");
 
 require_once("src/app/view/LayoutView.php");
 
-require_once("src/app/view/AddPubView.php");
 
-require_once("src/app/view/AddBeerView.php");
+
+
 
 require_once("src/app/view/ListPubsView.php");
 
 require_once("src/app/view/PubView.php");
 
 require_once("src/app/view/BeerView.php");
+
+
+// admin
+require_once("src/admin/controller/AdminController.php");
+require_once("src/admin/view/AdminView.php");
+require_once("src/admin/view/BaseFormView.php");
+require_once("src/admin/view/AddBeerView.php");
+require_once("src/admin/view/AddPubView.php");
+
+
+
+
 
 
 
@@ -67,11 +78,6 @@ class MasterController {
     public function run() {
 
         try {
-
-            $navView = new \view\NavigationView();
-            $layoutView = new \view\LayoutView($navView);
-            $service = new \model\Service();
-
             if ($this->navView->userWantsToDoPubs()) {
 
                 $pubs = $this->service->getPubs();
@@ -84,24 +90,29 @@ class MasterController {
             } elseif ($this->navView->userWantsToSeeBeer()) {
 
                 $beerID = $this->navView->getBeerId();
-                $beer = $service->getBeerById($beerID);
+                $beer = $this->service->getBeerById($beerID);
+
 
                 $beerView = new \view\BeerView($beer);
 
                 $html = $beerView->response();
+            } elseif ($this->navView->userWantsToDoAdmin()) {
+                $adminView = new \view\AdminView();
+                $adminController = new \controller\AdminController($adminView);
             }
 
-            $layoutView->render($html);
+            $this->layoutView->render($html);
+        } catch (\BeerDoesNotExistException $e) {
+            // 404 or flashmessage?
+        } catch (\PubDoesNotExistsException $e) {
+            // 404 or flashmessage
         } catch (\Exception $e) {
             error_log($e->getMessage() . "\n", 3, \Settings::ERROR_LOG);
             if (\Settings::DEBUG_MODE) {
                 throw $e;
             } else {
                 echo $e->getMessage();
-                //redirect to error or flashmessage error maybe?
-                die();
             }
         }
-
     }
 }

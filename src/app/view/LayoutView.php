@@ -20,7 +20,6 @@ class LayoutView  {
         "bootstrap" => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css",
         "bootstrap-theme" => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css",
         "site" => "css/site.css"
-
     );
 
     /**

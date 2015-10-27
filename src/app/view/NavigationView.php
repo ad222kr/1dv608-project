@@ -59,7 +59,7 @@ class NavigationView {
      * Checks the $_GET-var "action". If not set to anything, return "home";
      * @return string
      */
-    public function getAction() {
+    private function getAction() {
         if (isset($_GET[self::$action]))
             return $_GET[self::$action];
 
@@ -72,10 +72,6 @@ class NavigationView {
 
     public function userWantsToDoAdmin() {
         return $this->getAction() == self::$admin;
-    }
-
-    public function userWantsToSeeAll() {
-        return isset($_GET[self::$showAll]);
     }
 
     public function userWantsToSeePub() {
@@ -109,7 +105,7 @@ class NavigationView {
 
     public function reloadPage() {
         header("Location: " . $_SERVER['REQUEST_URI']);
-        exit();
+        die();
     }
 
 

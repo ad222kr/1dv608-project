@@ -75,9 +75,9 @@ class BeerDAL extends BaseDAL{
             $stmt->execute();
 
             $stmt->bind_result($id, $name, $abv, $manufacturer, $imageURL, $country, $volume, $servingtype);
-            var_dump($name);
-            var_dump($id);
+
             $stmt->fetch();
+            if ($id == null) throw new \BeerDoesNotExistException();
 
             $this->conn->close();
 

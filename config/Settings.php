@@ -13,7 +13,7 @@ class Settings {
      * If not, shows an error message to the user to hide stack trace
      * Also shows errors
      */
-    const DEBUG_MODE = TRUE
+    const DEBUG_MODE = true
     ;
 
 

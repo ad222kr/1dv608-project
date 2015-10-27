@@ -30,7 +30,7 @@ class NavigationView {
      */
     public function getLeftNavMenu() {
         $html  = '<ul class="nav navbar-nav">';
-        $html .= "<li ". $this->isActiveClass(self::$showPub) ."><a href='?".self::$action."=".self::$pubs."&".self::$showAll."'>Visa pubar</a></li>";
+        $html .= "<li ". $this->isActiveClass(self::$pubs) ."><a href='?".self::$action."=".self::$pubs."&".self::$showAll."'>Visa pubar</a></li>";
         $html .= "</ul>";
         return $html;
     }

@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alex
- * Date: 2015-10-25
- * Time: 22:05
- */
 
 namespace view;
-
 
 class ListPubsView implements IView {
 
@@ -20,44 +13,40 @@ class ListPubsView implements IView {
     }
 
     public function response() {
-        $ret = "<ul>";
+
+        $html = "<div class='row'>
+
+                    <h3>Pubar</h3>
+                        <div class='table-responsive'>
+                        <table class='table'>
+
+                            ". $this->getPubTableRows() ."
+                        </table>
+                        </div>
 
 
-        foreach ($this->pubRepository->get() as $pub) {
-
-
-            $id = $pub->getId();
-            $name = $pub->getName();
-            $address = $pub->getAddress();
-            $webPageURL = $pub->getWebpageURL();
-            $urlToPubView = $this->navView->getURLToPub($id);
-
-
-            $ret .= "<li><a href='$urlToPubView'>$name</a></li>";
-        }
-
-        $ret .= "</ul>";
-
-        return $ret;
+                </div>";
+        return $html;
     }
 
     public function getSelectedPub() {
-
-
         $id = $this->navView->getPubId();
 
         $pub = $this->pubRepository->getPubFromID($id);
 
         return $pub;
-
-
     }
+    private function getPubTableRows() {
+        $pubs = $this->pubRepository->get();
+        $html = "<thead><tr><th>Namn</th><th>Adress</th></thead>";
+        foreach($pubs as $pub) {
+            $html .= "<tr>";
+            $html .= "<td><a href='". $this->navView->getURLToPub($pub->getID()) ."'>". $pub->getName() ."</a>";
+            $html .= "<td>" . $pub->getAddress() . "</td>";
 
-    /**
-     * In a perfect world this function would be in the PubView
-     * but since the ListPubView is the view injected into pub-controller
-     * this function resides here so we can know what beer to view.
-     * @return mixed
-     */
+            $html .= "</tr>";
+        }
 
+        return $html;
+    }
 }

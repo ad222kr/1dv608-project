@@ -55,10 +55,12 @@ abstract class BaseDAL {
 
             return $mysqli;
         } catch (\mysqli_sql_exception $e) {
+            error_log($e->getMessage() - "\n", 3, \Settings::ERROR_LOG);
             if (\Settings::DEBUG_MODE) {
                 throw $e;
             } else {
-                error_log($e->getMessage(),0, \Settings::ERROR_LOG_PATH);
+                echo $e->getMessage();
+                die();
             }
         }
 

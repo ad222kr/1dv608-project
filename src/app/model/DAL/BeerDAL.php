@@ -28,7 +28,7 @@ class BeerDAL extends BaseDAL{
     public function getBeers() {
 
         try{
-            $stmt = $this->conn->prepare("INSERT TINT");
+            $stmt = $this->conn->prepare("SELECT * FROM " . self::$table);
             if (!$stmt) {
                 throw new \DataBaseException($this->conn->error);
             }
@@ -48,11 +48,10 @@ class BeerDAL extends BaseDAL{
             $this->conn->close();
             return $ret;
         } catch (\DataBaseException $e) {
+            error_log($e->getMessage() . "\n", 3, \Settings::ERROR_LOG);
             if (\Settings::DEBUG_MODE) {
                 throw $e;
             } else {
-                error_log($e->getMessage(), 0, \Settings::ERROR_LOG_PATH);
-                var_dump($e->getMessage());
                 echo "Something went wrong when connecting to the database";
                 //show error msg
                 die();
@@ -65,68 +64,103 @@ class BeerDAL extends BaseDAL{
 
     public function getBeerById($beerId) {
 
-        $stmt = $this->conn->prepare("SELECT * FROM " . self::$table . " WHERE beerid=?;");
+        try{
+            $stmt = $this->conn->prepare("SELECT * FROM " . self::$table . " WHERE beerid=?;");
 
-        if (!$stmt)
-            throw new \Exception($this->conn->error);
+            if (!$stmt)
+                throw new \DataBaseException($this->conn->error);
 
-        $stmt->bind_param('s', $beerId);
+            $stmt->bind_param('s', $beerId);
 
-        $stmt->execute();
+            $stmt->execute();
 
-        $stmt->bind_result($id, $name, $abv, $manufacturer, $imageURL, $country, $volume, $servingtype);
-        var_dump($name);
-        var_dump($id);
-        $stmt->fetch();
+            $stmt->bind_result($id, $name, $abv, $manufacturer, $imageURL, $country, $volume, $servingtype);
+            var_dump($name);
+            var_dump($id);
+            $stmt->fetch();
 
-        $this->conn->close();
+            $this->conn->close();
 
-        return new Beer($name, $abv, $manufacturer, $country, $volume, $servingtype, $imageURL, $id);
+            return new Beer($name, $abv, $manufacturer, $country, $volume, $servingtype, $imageURL, $id);
+        } catch (\DataBaseException $e){
+            if (\Settings::DEBUG_MODE) {
+                throw $e;
+            } else {
+                error_log($e->getMessage() . "\n", 3, \Settings::ERROR_LOG);
+                echo "Something went wrong when connecting to the database";
+                die();
+            }
+        }
+
 
     }
 
     public function addBeer(\model\Beer $beer) {
-        $stmt = $this->conn->prepare("CALL insert_beer(?, ?, ?, ?, ?, ?, ?, ?)");
 
-        if (!$stmt)
-            throw new \Exception($this->conn->error);
+        try {
+            $stmt = $this->conn->prepare("CALL insert_beer(?, ?, ?, ?, ?, ?, ?, ?)");
 
-        $id = $beer->getId();
-        $name = $beer->getName();
-        $abv = $beer->getAbv();
-        $manufacturer = $beer->getBrewery();
-        $imageurl = $beer->getImageURL();
-        $country = $beer->getCountry();
-        $volume = $beer->getVolume();
-        $servingType = $beer->getServingType();
+            if (!$stmt)
+                throw new \DataBaseException($this->conn->error);
 
-        $stmt->bind_param('ssdsssds', $id, $name, $abv, $manufacturer, $imageurl, $country, $volume, $servingType);
+            $id = $beer->getId();
+            $name = $beer->getName();
+            $abv = $beer->getAbv();
+            $manufacturer = $beer->getBrewery();
+            $imageurl = $beer->getImageURL();
+            $country = $beer->getCountry();
+            $volume = $beer->getVolume();
+            $servingType = $beer->getServingType();
 
-        $stmt->execute();
+            $stmt->bind_param('ssdsssds', $id, $name, $abv, $manufacturer, $imageurl, $country, $volume, $servingType);
 
-        $this->conn->close();
+            $stmt->execute();
+
+            $this->conn->close();
+
+        } catch (\DataBaseException $e) {
+            if (\Settings::DEBUG_MODE) {
+                throw $e;
+            } else {
+                error_log($e->getMessage() . "\n", 3, \Settings::ERROR_LOG);
+                echo "Something went wrong when connecting to the database";
+                die();
+            }
+        }
     }
 
     public function updateBeer(\model\Beer $beer) {
-        $stmt = $this->conn->prepare("CALL update_beer(?, ?, ?, ?, ?, ?, ?, ?)");
 
-        if (!$stmt)
-            throw new \Exception($this->conn->error);
+        try {
+            $stmt = $this->conn->prepare("CALL update_beer(?, ?, ?, ?, ?, ?, ?, ?)");
 
-        $id = $beer->getId();
-        $name = $beer->getName();
-        $abv = $beer->getAbv();
-        $manufacturer = $beer->getBrewery();
-        $imageurl = $beer->getImageURL();
-        $country = $beer->getCountry();
-        $volume = $beer->getVolume();
-        $servingType = $beer->getServingType();
+            if (!$stmt)
+                throw new \DataBaseException($this->conn->error);
 
-        $stmt->bind_param("ssdsssds", $id, $name, $abv, $manufacturer, $imageurl, $country, $volume, $servingType);
+            $id = $beer->getId();
+            $name = $beer->getName();
+            $abv = $beer->getAbv();
+            $manufacturer = $beer->getBrewery();
+            $imageurl = $beer->getImageURL();
+            $country = $beer->getCountry();
+            $volume = $beer->getVolume();
+            $servingType = $beer->getServingType();
 
-        $stmt->execute();
+            $stmt->bind_param("ssdsssds", $id, $name, $abv, $manufacturer, $imageurl, $country, $volume, $servingType);
 
-        $this->conn->close();
+            $stmt->execute();
+
+            $this->conn->close();
+
+        } catch (\DataBaseException $e) {
+            if (\Settings::DEBUG_MODE) {
+                throw $e;
+            } else {
+                error_log($e->getMessage() . "\n", 3, \Settings::ERROR_LOG);
+                echo "Something went wrong when connecting to the database";
+                die();
+            }
+        }
 
     }
 

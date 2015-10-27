@@ -13,11 +13,13 @@ class Settings {
      * If not, shows an error message to the user to hide stack trace
      * Also shows errors
      */
-    const DEBUG_MODE = FALSE;
+    const DEBUG_MODE = TRUE
+    ;
 
 
-    const ERROR_LOG_PATH = "errorlog.txt";
+    const ERROR_LOG= "myerrors.log";
 
+    const IMG_PATH = "images/user_uploaded/no_picture_beer.jpg";
 
 
 

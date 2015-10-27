@@ -2,6 +2,8 @@
 
 namespace model;
 
+require_once("src/app/common/exceptions/DataBaseException.php");
+
 abstract class BaseDAL {
     /**
      * @var string, key for url to server hosting database
@@ -30,27 +32,36 @@ abstract class BaseDAL {
 
 
     public function __construct() {
+
+        // Ensure mysqli reporting is setup correctly
+        mysqli_report(MYSQLI_REPORT_STRICT);
+
         $this->conn = $this->getConnection();
 
     }
 
     private function getConnection() {
-        $url = parse_url(getenv(\Settings::DATABASE_ENV_PATH));
+        try {
+            $url = parse_url(getenv(\Settings::DATABASE_ENV_PATH));
 
-        $host = $url[self::$hostKey];
-        $un= $url[self::$usernameKey];
-        $pw = $url[self::$passwordKey];
-        $db = substr($url[self::$dbnameKey], 1);
+            $host = $url[self::$hostKey];
+            $un= $url[self::$usernameKey];
+            $pw = $url[self::$passwordKey];
+            $db = substr($url[self::$dbnameKey], 1);
 
-        $mysqli = new \mysqli($host, $un, $pw, $db);
-        $mysqli->set_charset("utf8");
 
-        if (mysqli_connect_errno()) {
-            printf("Connect failed: %s\n", mysqli_connect_errno());
-            exit();
+            $mysqli = new \mysqli($host, $un, $pw, $db);
+            $mysqli->set_charset("utf8");
+
+            return $mysqli;
+        } catch (\mysqli_sql_exception $e) {
+            if (\Settings::DEBUG_MODE) {
+                throw $e;
+            } else {
+                error_log($e->getMessage(),0, \Settings::ERROR_LOG_PATH);
+            }
         }
 
-        return $mysqli;
 
     }
 }

@@ -12,14 +12,14 @@ namespace view;
 class NavigationView {
 
     private static $action = "action";
-
-    public static $addBeer = "add_beer";
-    public static $updateBeer = "update_beer";
+    public static $admin   = "admin";
+    public static $pubs    = "pubs";
+    public static $beers   = "beers";
+    public static $showAll = "show_all";
     public static $showBeer = "show_beer";
-    public static $addPub = "add_pub";
-    public static $showPubs = "show_pubs";
-    public static $signIn = "sign_in";
-    public static $register = "register";
+    public static $showPub = "show_pub";
+    public static $showAllPubs = "show_pubs";
+    public static $showAllBeers = "show_beers";
     public static $pubID = "pub_id";
     public static $beerID = "beer_id";
 
@@ -30,10 +30,9 @@ class NavigationView {
      */
     public function getLeftNavMenu() {
         $html  = '<ul class="nav navbar-nav">';
-        $html .= "<li ". $this->isActiveClass(self::$showPubs) ."><a href='?".self::$action."=".self::$showPubs."'>Visa pubar</a></li>";
+        $html .= "<li ". $this->isActiveClass(self::$showPub) ."><a href='?".self::$action."=".self::$pubs."&".self::$showAll."'>Visa pubar</a></li>";
         $html .= "</ul>";
         return $html;
-
     }
 
     /**
@@ -43,19 +42,18 @@ class NavigationView {
      */
     public function getRightNavMenu() {
         $html  = '<ul class="nav navbar-nav navbar-right">';
-        $html .= "<li ". $this->isActiveClass(self::$signIn) ."><a href='?".self::$action."=".self::$signIn."'>Logga in</a></li>";
-        $html .= "<li ". $this->isActiveClass(self::$register) ."><a href='?".self::$action."=".self::$register."'>Registrera</a></li>";
+        $html .= "<li ". $this->isActiveClass(self::$admin) ."><a href='?".self::$action."=".self::$admin."'>Administrera</a></li>";
         $html .= "</ul>";
         return $html;
     }
 
-
-    public function isActiveClass($actionName) {
+    private function isActiveClass($actionName) {
         $currentAction = $this->getAction();
         if($currentAction === $actionName){
             return 'class="active"';
         }
     }
+
 
     /**
      * Checks the $_GET-var "action". If not set to anything, return "home";
@@ -65,25 +63,47 @@ class NavigationView {
         if (isset($_GET[self::$action]))
             return $_GET[self::$action];
 
-        return self::$showPubs;
+        return self::$pubs; // standard action, homepage
+    }
+
+    public function userWantsToDoPubs() {
+        return $this->getAction() == self::$pubs;
+    }
+
+    public function userWantsToDoAdmin() {
+        return $this->getAction() == self::$admin;
+    }
+
+    public function userWantsToSeeAll() {
+        return isset($_GET[self::$showAll]);
     }
 
     public function userWantsToSeePub() {
         return isset($_GET[self::$pubID]);
     }
 
+    public function userWantsToSeeBeer() {
+        return isset($_GET[self::$beerID]);
+    }
+
     public function getURLToPub($pubId) {
-        return "?".self::$action."=".self::$showPubs."&".self::$pubID."=".$pubId;
+        return "?".self::$action."=".self::$pubs."&".self::$pubID."=".$pubId;
     }
 
     public function getURLToBeer($beerID) {
-        return "?".self::$action."=".self::$showBeer."&".self::$beerID."=".$beerID;
+        return "?".self::$action."=".self::$beers."&".self::$beerID."=".$beerID;
     }
 
     public function getPubId() {
         if (isset($_GET[self::$pubID]))
             return $_GET[self::$pubID];
 
+        return null;
+    }
+
+    public function getBeerId() {
+        if (isset($_GET[self::$beerID]))
+            return $_GET[self::$beerID];
         return null;
     }
 

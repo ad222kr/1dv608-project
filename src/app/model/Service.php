@@ -43,7 +43,10 @@ class Service {
     }
 
     public function getBeers() {
-
+        return $this->beerDAL->getBeers();
+    }
+    public function getBeerById($id) {
+        return $this->beerDAL->getBeerById($id);
     }
 
     private function getPubBeers() {

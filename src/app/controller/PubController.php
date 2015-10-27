@@ -9,6 +9,8 @@
 namespace controller;
 
 
+use view\BeerView;
+
 class PubController implements IController {
 
     /**
@@ -45,6 +47,7 @@ class PubController implements IController {
             if ($selectedPub == null) return;
             $this->pubView = new \view\PubView($selectedPub, $this->navView);
         }
+
     }
 
     public function getView() {

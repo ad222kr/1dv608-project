@@ -3,6 +3,7 @@
 namespace controller;
 
 use view\ListPubsView;
+use view\PubView;
 
 require_once("src/app/view/BaseFormView.php");
 require_once("src/app/model/Service.php");
@@ -18,6 +19,7 @@ require_once("src/app/view/AddPubView.php");
 require_once("src/app/view/AddBeerView.php");
 require_once("src/app/view/ListPubsView.php");
 require_once("src/app/view/PubView.php");
+require_once("src/app/view/BeerView.php");
 
 //TODO: move exception requires to classes that use them.
 //TODO: try to implement autoloader if time allows.
@@ -41,47 +43,43 @@ class MasterController {
      */
     private $layoutView;
 
-    private $pubListView;
-
     /**
      * Talks to the DAL
      * @var Service
      */
     private $service;
 
+    private $pubs;
+
+    private $beers;
+
     public function __construct() {
         $this->navView = new \view\NavigationView();
         $this->layoutView = new \view\LayoutView($this->navView);
         $this->service = new \model\Service();
+        $this->pubs = $this->service->getPubs();
+        $this->listPubsView = new \view\ListPubsView($this->pubs, $this->navView);
     }
 
     public function run() {
 
-        switch($this->navView->getAction()) {
-            case \view\NavigationView::$showPubs:
-                $pubs = $this->service->getPubs();
-                $view = new ListPubsView($pubs, $this->navView);
-                $pubController = new \controller\PubController($view, $this->navView, $pubs);
-                $pubController->doControl();
+        $navView = new \view\NavigationView();
+        $layoutView = new \view\LayoutView($navView);
+        $service = new \model\Service();
 
-                $html = $pubController->getView()->response();
-                break;
-            case \view\NavigationView::$addPub:
-                $html = "Add Pub!";
-                //todo: add pub
-                break;
+        $html = "FAIUL";
 
-            case \view\NavigationView::$showBeer:
-                $html = "Show Beer";
-                //todo: show beer
-                break;
-            case \view\NavigationView::$addBeer:
-                $view = new \view\AddBeerView();
-                $controller = new \controller\BeerController($view);
-                $html = $controller->getView()->response();
-                break;
+        if ($this->navView->userWantsToDoPubs()) {
+            $pubController = new \controller\PubController($this->listPubsView, $this->navView, $this->pubs);
+            $pubController->doControl();
+            $html = $pubController->getView()->response();
+        } elseif ($this->navView->userWantsToSeeBeer()) {
+            $beerID = $this->navView->getBeerId();
+            $beer = $service->getBeerById($beerID);
+            $beerView = new \view\BeerView($beer);
+            $html = $beerView->response();
         }
 
-        $this->layoutView->render($html);
+        $layoutView->render($html);
     }
 }

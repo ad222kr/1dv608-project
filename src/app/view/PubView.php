@@ -62,4 +62,5 @@ class PubView implements IView {
 
         return $html;
     }
+
 }

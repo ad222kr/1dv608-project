@@ -9,7 +9,7 @@ namespace view;
  */
 class LayoutView  {
 
-    private $cssOff = false; // just debug, cant see var_dump sometimes cus of bootstrap...
+    private $cssOff = true; // just debug, cant see var_dump sometimes cus of bootstrap...
 
     /**
      * Title of the application

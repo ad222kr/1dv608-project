@@ -48,12 +48,18 @@ class ListPubsView implements IView {
 
             $pub = $this->pubRepository->getPubFromID($id);
 
-
-
             return $pub;
         } catch (\PubDoesNotExistsException $e) {
             echo $e->getMessage(); //TODO: flöashmessage
         }
 
     }
+
+    /**
+     * In a perfect world this function would be in the PubView
+     * but since the ListPubView is the view injected into pub-controller
+     * this function resides here so we can know what beer to view.
+     * @return mixed
+     */
+
 }

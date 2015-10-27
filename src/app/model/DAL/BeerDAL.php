@@ -4,6 +4,7 @@ namespace model;
 
 require_once("src/app/model/BeerRepository.php");
 
+
 class BeerDAL extends BaseDAL{
 
     /*
@@ -26,30 +27,45 @@ class BeerDAL extends BaseDAL{
 
     public function getBeers() {
 
-        $stmt = $this->conn->prepare("call get_beers()");
-        if (!$stmt) {
-            throw new \Exception($this->conn->error);
+        try{
+            $stmt = $this->conn->prepare("INSERT TINT");
+            if (!$stmt) {
+                throw new \DataBaseException($this->conn->error);
+            }
+
+            $stmt->execute();
+
+            $stmt->bind_result($id, $name, $abv, $manufacturer, $imageURL, $country, $volume, $servingType);
+
+
+
+            $ret = new BeerRepository();
+
+            while ($stmt->fetch()) {
+                $ret->add(new Beer( $name, $abv, $manufacturer, $country, $volume, $servingType, $imageURL, $id));
+            }
+
+            $this->conn->close();
+            return $ret;
+        } catch (\DataBaseException $e) {
+            if (\Settings::DEBUG_MODE) {
+                throw $e;
+            } else {
+                error_log($e->getMessage(), 0, \Settings::ERROR_LOG_PATH);
+                var_dump($e->getMessage());
+                echo "Something went wrong when connecting to the database";
+                //show error msg
+                die();
+            }
+
+
         }
 
-        $stmt->execute();
-
-        $stmt->bind_result($id, $name, $abv, $manufacturer, $imageURL, $country, $volume, $servingType);
-
-
-
-        $ret = new BeerRepository();
-
-        while ($stmt->fetch()) {
-            $ret->add(new Beer( $name, $abv, $manufacturer, $country, $volume, $servingType, $imageURL, $id));
-        }
-
-        $this->conn->close();
-        return $ret;
     }
 
     public function getBeerById($beerId) {
 
-        $stmt = $this->conn->prepare("call get_beer_by_id(?)");
+        $stmt = $this->conn->prepare("SELECT * FROM " . self::$table . " WHERE beerid=?;");
 
         if (!$stmt)
             throw new \Exception($this->conn->error);
@@ -58,9 +74,9 @@ class BeerDAL extends BaseDAL{
 
         $stmt->execute();
 
-
-
         $stmt->bind_result($id, $name, $abv, $manufacturer, $imageURL, $country, $volume, $servingtype);
+        var_dump($name);
+        var_dump($id);
         $stmt->fetch();
 
         $this->conn->close();

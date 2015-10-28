@@ -2,16 +2,37 @@
 
 namespace view;
 
+/**
+ * Class ListPubsView
+ * View class to present the class \model\Pubrepository. Lists all pubs
+ * @package view
+ */
+
 class ListPubsView  {
 
+    /**
+     * @var \model\PubRepository
+     */
     private $pubRepository;
+
+    /**
+     * @var NavigationView
+     */
     private $navView;
 
+    /**
+     * @param \model\PubRepository $pubRepository
+     * @param NavigationView $navView
+     */
     public function __construct(\model\PubRepository $pubRepository, \view\NavigationView $navView) {
         $this->pubRepository = $pubRepository;
         $this->navView = $navView;
     }
 
+    /**
+     * Response returned to the LayoutView and rendered
+     * @return string
+     */
     public function response() {
 
         $html = "<div class='row'>
@@ -29,12 +50,26 @@ class ListPubsView  {
         return $html;
     }
 
+    /**
+     * @return \model\Pub
+     * @throws \PubDoesNotExistsException
+     */
     public function getSelectedPub() {
-        $id = $this->navView->getPubId();
+        try {
+            $id = $this->navView->getPubId();
 
-        $pub = $this->pubRepository->getPubFromID($id);
+            $pub = $this->pubRepository->getPubFromID($id);
 
-        return $pub;
+            return $pub;
+        } catch (\PubDoesNotExistsException $e) {
+            if (\Settings::DEBUG_MODE) {
+                echo "No such pub";
+                throw $e;
+            } else {
+                echo "No such pub";
+            }
+        }
+
     }
     private function getPubTableRows() {
         $pubs = $this->pubRepository->get();

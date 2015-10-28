@@ -25,6 +25,14 @@ class BeerRepository {
         $this->beers[$toBeAdded->getId()] = $toBeAdded;
     }
 
+    public function getById($id) {
+        if (isset($this->beers[$id]))
+            return $this->beers[$id];
+
+        // heroku dont like
+        throw new \BeerDoesNotExistException("Beer does not exist in the database");
+    }
+
     public function get() {
         return $this->beers;
     }

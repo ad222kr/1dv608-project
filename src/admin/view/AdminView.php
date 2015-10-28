@@ -13,7 +13,7 @@ class AdminView  {
 
 
     public function response() {
-
+        return "<p>Logged in as Admin</p>";
     }
 
     public function adminWantsToAddPub() {

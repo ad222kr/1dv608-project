@@ -29,7 +29,7 @@ class BeerDAL extends BaseDAL{
 
         try{
             $stmt = $this->conn->prepare("SELECT * FROM " . self::$table);
-            if (!$stmt) {
+            if ($stmt === FALSE) {
                 throw new \DataBaseException($this->conn->error);
             }
 
@@ -45,18 +45,17 @@ class BeerDAL extends BaseDAL{
                 $ret->add(new Beer( $name, $abv, $manufacturer, $country, $volume, $servingType, $imageURL, $id));
             }
 
-            $this->conn->close();
             return $ret;
         } catch (\DataBaseException $e) {
             error_log($e->getMessage() . "\n", 3, \Settings::ERROR_LOG);
             if (\Settings::DEBUG_MODE) {
+                echo $e->getMessage();
                 throw $e;
             } else {
                 echo "Something went wrong when connecting to the database";
                 //show error msg
                 die();
             }
-
 
         }
 
@@ -77,9 +76,12 @@ class BeerDAL extends BaseDAL{
             $stmt->bind_result($id, $name, $abv, $manufacturer, $imageURL, $country, $volume, $servingtype);
 
             $stmt->fetch();
+
+            // Since getting a single beer is done via the DAL and not the pub-class this
+            // exception is thrown here
             if ($id == null) throw new \BeerDoesNotExistException();
 
-            $this->conn->close();
+
 
             return new Beer($name, $abv, $manufacturer, $country, $volume, $servingtype, $imageURL, $id);
         } catch (\DataBaseException $e){

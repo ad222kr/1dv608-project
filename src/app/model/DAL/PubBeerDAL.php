@@ -21,24 +21,29 @@ class PubBeerDAL extends BaseDAL {
     }
 
     public function getPubBeers() {
-        $stmt = $this->conn->prepare("SELECT * FROM " . self::$table);
+        try {
+            $stmt = $this->conn->prepare("SELECT * FROM " . self::$table);
 
-        if (!$stmt)
-            throw new \Exception($this->conn->error);
+            if (!$stmt)
+                throw new \DataBaseException($this->conn->error);
 
-        $stmt->execute();
+            $stmt->execute();
 
-        $stmt->bind_result($beerID, $pubID, $price);
+            $stmt->bind_result($beerID, $pubID, $price);
 
-        $ret = new PubBeerRepository();
+            $ret = new PubBeerRepository();
 
-        while($stmt->fetch()) {
-            $ret->add(new PubBeer($beerID, $pubID, $price));
+            while($stmt->fetch()) {
+                $ret->add(new PubBeer($beerID, $pubID, $price));
+            }
+
+            $this->conn->close();
+
+            return $ret;
+
+        } catch (\DataBaseException $e) {
+
         }
-
-        $this->conn->close();
-
-        return $ret;
 
     }
 }

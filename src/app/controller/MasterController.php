@@ -4,6 +4,8 @@ namespace controller;
 
 
 
+use model\BeerRepository;
+
 require_once("src/app/model/Service.php");
 require_once("config/Settings.php");
 
@@ -74,27 +76,18 @@ class MasterController {
     public function run() {
 
         try {
-            if ($this->navView->userWantsToDoPubs()) {
+            if ($this->navView->userWantsToDoPubsAndBeers()) {
                 $html = $this->doPub();
-
-            } elseif ($this->navView->userWantsToSeeBeer()) {
-
-                $html = $this->viewBeer();
-
-            } elseif ($this->navView->userWantsToDoAdmin()) {
+            }  elseif ($this->navView->userWantsToDoAdmin()) {
                 $html = $this->doAdmin();
             }
-
             $this->layoutView->render($html);
-        } catch (\BeerDoesNotExistException $e) {
-            // 404 or flashmessage?
-        } catch (\PubDoesNotExistsException $e) {
-            // 404 or flashmessage
         } catch (\Exception $e) {
             error_log($e->getMessage() . "\n", 3, \Settings::ERROR_LOG);
             if (\Settings::DEBUG_MODE) {
                 throw $e;
             } else {
+                // show generic error view here
                 echo $e->getMessage();
             }
         }
@@ -102,24 +95,17 @@ class MasterController {
 
     public function doPub() {
         $pubs = $this->service->getPubs();
+        $beers = $this->service->getBeers();
         $listPubsView = new \view\ListPubsView($pubs, $this->navView);
-        $pubController = new \controller\PubController($listPubsView, $this->navView, $pubs);
+        $pubController = new \controller\PubController($listPubsView, $this->navView, $pubs, $beers);
         $pubController->doControl();
 
         return $pubController->getView()->response();
     }
 
-    public function viewBeer() {
-        $beerID = $this->navView->getBeerId();
-        $beer = $this->service->getBeerById($beerID);
-        $beerView = new \view\BeerView($beer);
-
-        return $beerView->response();
-    }
-
     private function doAdmin() {
 
-        $adminController = new \controller\AdminController();
+        $adminController = new \controller\AdminController($this->navView);
         $adminController->doControl();
 
         return $adminController->getView()->response();

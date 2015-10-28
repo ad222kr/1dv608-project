@@ -10,9 +10,7 @@ namespace controller;
 
 
 use common\SessionHandler;
-use model\UserDAL;
 use view\AdminView;
-use view\LoginView;
 
 require_once("src/common/helpers/ITempDataHandler.php");
 require_once("src/admin/view/BaseFormView.php");
@@ -37,8 +35,6 @@ require_once("src/admin/model/DAL/TempCredentialsDAL.php");
 
 
 
-
-
 class AdminController {
 
 
@@ -49,7 +45,7 @@ class AdminController {
 
 
     public function __construct(\view\NavigationView $navView) {
-
+        $this->navView = $navView;
         $this->sessionHandler = new SessionHandler();
         $this->userDAL = new \model\UserDAL();
 
@@ -58,7 +54,7 @@ class AdminController {
     public function doControl() {
 
         if ($this->sessionHandler->isLoggedIn()) {
-            if ($this->)
+            $this->view = new AdminView();
         } else {
             $cookieHandler = new \view\CookieHandler();
             $loginModel = new \model\LoginModel($this->sessionHandler, $this->userDAL);

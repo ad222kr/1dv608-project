@@ -19,6 +19,8 @@ class LoginController {
      * @var \view\LoginView
      */
     private $loginView;
+
+    private $navView;
     /**
      * @param \model\LoginModel $loginModel
      * @param \view\LoginView $loginView

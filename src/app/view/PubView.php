@@ -8,20 +8,39 @@
 
 namespace view;
 
+/**
+ * Class PubView
+ * View-class for a presenting class \model\Pub
+ * @package view
+ */
 
 class PubView {
 
+    /**
+     * @var \model\Pub
+     */
     private $pub;
+
+    /**
+     * @var NavigationView
+     */
     private $navView;
+
+    /**
+     * @param \model\Pub $pub
+     * @param NavigationView $navView
+     */
     public function __construct(\model\Pub $pub, \view\NavigationView $navView) {
         $this->pub = $pub;
         $this->navView = $navView;
     }
 
-
-
+    /**
+     * Response returned to the LayoutView and rendered
+     *
+     * @return string
+     */
     public function response() {
-
         $id = $this->pub->getId();
         $name = $this->pub->getName();
         $address = $this->pub->getAddress();
@@ -48,6 +67,9 @@ class PubView {
         return $html;
     }
 
+    /**
+     * @return string
+     */
     private function getBeerTableRows() {
         $beers = $this->pub->getBeers();
         $html = "<thead><tr><th>Namn</th><th>Bryggeri</th><th>Pris</th></thead>";
@@ -59,8 +81,6 @@ class PubView {
 
             $html .= "</tr>";
         }
-
         return $html;
     }
-
 }

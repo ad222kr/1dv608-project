@@ -11,13 +11,14 @@ class Pub {
     private $name;
     private $address;
     private $webpageURL;
-    private $beers = array();
+    private $beers;
 
     public function __construct($id, $name, $address, $webpageURL) {
         $this->id = $id;
         $this->name = $name;
         $this->address = $address;
         $this->webpageURL = $webpageURL;
+        $this->beers = new BeerRepository();
     }
 
     /**
@@ -50,26 +51,17 @@ class Pub {
     }
 
     public function addBeer(Beer $toBeAdded) {
-        foreach ($this->beers as $beer) {
-            if ($beer->getId() == $toBeAdded->getId()){
-
-                throw new \BeerAlreadyExistsException("Beer already exists, cannot add it again");
-            }
-        }
-        $this->beers[$toBeAdded->getId()] = $toBeAdded;
+        $this->beers->add($toBeAdded);
     }
 
-    public function getBeer($key) {
+    // Not used yet. Maybe fix solution to use this instead of
+    public function getBeer($id) {
         // TODO:_ check for errors etc,exception
-        if (isset($this->beers[$key]))
-            return $this->beers[$key];
-
-        // heroku dont like
-        throw new \BeerDoesNotExistException("Beer does not exist in the database");
+        $this->beers->getById($id);
     }
 
     public function getBeers() {
-        return $this->beers;
+        return $this->beers->get();
     }
 
     public function isSame(\model\Pub $other) {

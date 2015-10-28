@@ -21,7 +21,7 @@ class PubDAL extends BaseDAL {
             $stmt = $this->conn->prepare("SELECT * FROM " . self::$table);
 
             if (!$stmt) {
-                throw new \Exception($this->conn->error);
+                throw new \DataBaseException($this->conn->error);
             }
 
             $stmt->execute();
@@ -48,8 +48,6 @@ class PubDAL extends BaseDAL {
                 die();
             }
         }
-
-
     }
 
     public function getPubByID($id) {
@@ -58,7 +56,7 @@ class PubDAL extends BaseDAL {
             $stmt = $this->conn->prepare("SELECT * FROM " . self::$table . "WHERE pubid=?");
             $stmt->bind_param("s", $id);
             if (!$stmt) {
-                throw new \Exception($this->conn->error);
+                throw new \DataBaseException($this->conn->error);
             }
 
             $stmt->execute();

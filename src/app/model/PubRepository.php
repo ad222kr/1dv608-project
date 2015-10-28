@@ -1,9 +1,8 @@
 <?php
 
 namespace model;
-require_once("src/app/common/exceptions/PubAlreadyExistsException.php");
-require_once("src/app/common/exceptions/PubDoesNotExistsException.php");
-
+require_once("src/common/exceptions/PubAlreadyExistsException.php");
+require_once("src/common/exceptions/PubDoesNotExistsException.php");
 
 class PubRepository {
 

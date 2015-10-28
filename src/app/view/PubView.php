@@ -9,7 +9,7 @@
 namespace view;
 
 
-class PubView implements IView {
+class PubView {
 
     private $pub;
     private $navView;

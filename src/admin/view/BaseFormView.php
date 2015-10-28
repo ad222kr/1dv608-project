@@ -14,8 +14,57 @@ namespace view;
  * @package view
  */
 
-class BaseFormView {
+abstract class BaseFormView {
 
+    private static $messageKey = "SessionHandler::TempMessage";
+    protected static $registeredUsernameKey = "SessionHandler::Username";
+    /**
+     * @var \common\ITempDataHandler
+     */
+    protected $tempDataHandler;
+    /**
+     * @var String, Feedback message
+     */
+    protected $message = null;
+
+
+    public function __construct(\common\ITempDataHandler $tempDataHandler) {
+        $this->tempDataHandler = $tempDataHandler;
+    }
+    /**
+     * @param $stringToSanitize
+     * @return string, input sanitized
+     */
+    protected function sanitizeInput($stringToSanitize) {
+        assert(is_string($stringToSanitize));
+        $sanitized = htmlspecialchars($stringToSanitize, ENT_COMPAT,'ISO-8859-1');
+        return $sanitized;
+    }
+    public function reloadPage() {
+        header("Location: " . $_SERVER['REQUEST_URI']);
+        exit();
+    }
+    /**
+     * Sets a message to the session if it should persist, else to a member var
+     *
+     * @param $message
+     * @param bool|false $shouldPersistRedirect
+     */
+    protected function setMessage($message, $shouldPersistRedirect = false) {
+        assert(is_string($message));
+        assert(is_bool($shouldPersistRedirect));
+        if ($shouldPersistRedirect) {
+            $this->tempDataHandler->setTempData(self::$messageKey, $message);
+        } else {
+            $this->message = $message;
+        }
+    }
+    protected function getMessage() {
+        if (strlen($this->message) > 0) {
+            return $this->message;
+        }
+        return $this->tempDataHandler->getTempData(self::$messageKey);
+    }
 
     protected function getTextField($title, $name, $type) {
         $value = $this->getPostField($name);

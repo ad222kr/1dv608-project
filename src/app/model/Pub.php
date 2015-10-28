@@ -2,10 +2,8 @@
 
 namespace model;
 
-
-require_once("src/app/common/exceptions/BeerAlreadyExistsException.php");
-require_once("src/app/common/exceptions/BeerDoesNotExistException.php");
-
+require_once("src/common/exceptions/BeerDoesNotExistException.php");
+require_once("src/common/exceptions/BeerAlreadyExistsException.php");
 
 class Pub {
 
@@ -16,8 +14,6 @@ class Pub {
     private $beers = array();
 
     public function __construct($id, $name, $address, $webpageURL) {
-        //TODO: Add validation
-
         $this->id = $id;
         $this->name = $name;
         $this->address = $address;
@@ -62,7 +58,6 @@ class Pub {
         }
         $this->beers[$toBeAdded->getId()] = $toBeAdded;
     }
-
 
     public function getBeer($key) {
         // TODO:_ check for errors etc,exception

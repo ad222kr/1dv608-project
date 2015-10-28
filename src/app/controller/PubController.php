@@ -1,17 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alex
- * Date: 2015-10-23
- * Time: 16:52
- */
 
 namespace controller;
 
-
-use view\BeerView;
-
-class PubController implements IController {
+class PubController  {
 
     /**
      * @var ListPubsView

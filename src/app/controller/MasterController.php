@@ -5,37 +5,33 @@ namespace controller;
 
 
 require_once("src/app/model/Service.php");
-
 require_once("config/Settings.php");
 
+
 require_once("src/app/model/Beer.php");
-
 require_once("src/app/model/Pub.php");
-
-
 require_once("src/app/controller/PubController.php");
-
 require_once("src/app/view/NavigationView.php");
-
 require_once("src/app/view/LayoutView.php");
-
-
-
-
-
 require_once("src/app/view/ListPubsView.php");
-
 require_once("src/app/view/PubView.php");
-
 require_once("src/app/view/BeerView.php");
-
-
 // admin
+
 require_once("src/admin/controller/AdminController.php");
+
 require_once("src/admin/view/AdminView.php");
 require_once("src/admin/view/BaseFormView.php");
+
 require_once("src/admin/view/AddBeerView.php");
+
 require_once("src/admin/view/AddPubView.php");
+
+//exceptions
+
+
+
+
 
 
 
@@ -122,8 +118,9 @@ class MasterController {
     }
 
     private function doAdmin() {
-        $adminView = new \view\AdminView();
-        $adminController = new \controller\AdminController($adminView);
+
+        $adminController = new \controller\AdminController();
+        $adminController->doControl();
 
         return $adminController->getView()->response();
     }

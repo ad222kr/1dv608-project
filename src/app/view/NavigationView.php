@@ -13,6 +13,8 @@ class NavigationView {
 
     private static $action = "action";
     public static $admin   = "admin";
+    public static $addBeer = "add_beer";
+    public static $addPub  = "add_pub";
     public static $pubs    = "pubs";
     public static $beers   = "beers";
     public static $showAll = "show_all";
@@ -72,6 +74,10 @@ class NavigationView {
 
     public function userWantsToDoAdmin() {
         return $this->getAction() == self::$admin;
+    }
+
+    public function adminWantsToAddBeer() {
+
     }
 
     public function userWantsToSeePub() {

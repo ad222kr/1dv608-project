@@ -2,7 +2,7 @@
 
 namespace view;
 
-class ListPubsView implements IView {
+class ListPubsView  {
 
     private $pubRepository;
     private $navView;

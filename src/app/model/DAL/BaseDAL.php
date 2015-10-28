@@ -1,8 +1,7 @@
 <?php
 
 namespace model;
-
-require_once("src/app/common/exceptions/DataBaseException.php");
+require_once("src/common/exceptions/DataBaseException.php");
 
 abstract class BaseDAL {
     /**

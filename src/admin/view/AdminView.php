@@ -9,9 +9,18 @@
 namespace view;
 
 
-class AdminView implements IView {
+class AdminView  {
+
 
     public function response() {
-        return "<p>DoAdmin!</p>";
+
+    }
+
+    public function adminWantsToAddPub() {
+
+    }
+
+    public function adminWantsToAddBeer() {
+
     }
 }

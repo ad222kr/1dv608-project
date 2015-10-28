@@ -9,7 +9,7 @@
 namespace view;
 
 
-class BeerView implements IView {
+class BeerView  {
 
     private $beer;
 

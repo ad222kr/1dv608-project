@@ -14,17 +14,25 @@ class AdminView  {
 
     private $loginView;
     private $navView;
-    public function __construct(LoginView $loginView, NavigationView $navView) {
+    private $isLoggedIn;
+    public function __construct(LoginView $loginView, NavigationView $navView, $isLoggedIn) {
         $this->loginView = $loginView;
         $this->navView = $navView;
+        $this->isLoggedIn = $isLoggedIn;
     }
 
 
     public function response() {
         $html = "<h2>Administration</h2>";
+
+        if ($this->isLoggedIn) {
+            $html .= "<a href=" . $this->navView->getURLToAddPub() . ">Lägg till pub</a><br/ >";
+            $html .= "<a href=" . $this->navView->getURLToAddBeer() . ">Lägg til öl</a>";
+        } else {
+            $html .= "<p>Vänligen logga in för att administrera pubar och öl</p>";
+        }
+
         $html .= $this->loginView->response();
-        $html .= "<a href=" . $this->navView->getURLToAddPub() . ">Lägg till pub</a>";
-        $html .= "<a href=" . $this->navView->getURLToAddBeer() . ">Lägg til öl</a>";
         return $html;
     }
 

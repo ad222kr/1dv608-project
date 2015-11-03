@@ -62,9 +62,11 @@ class AdminController {
         $loginController = new \controller\LoginController($loginModel, $loginView);
 
         // execute
-        $loginController->doLoginAction();
+        $isLoggedIn = $loginController->doLoginAction();
 
-        $this->view = new \view\AdminView($loginView, $this->navView);
+        $this->view = new \view\AdminView($loginView, $this->navView, $isLoggedIn);
+        if ($isLoggedIn) return;
+
 
         if ($this->navView->adminWantsToAddBeer()) {
             $this->view = new \view\AddBeerView($sessionHandler, $this->adminFacade->getPubs());

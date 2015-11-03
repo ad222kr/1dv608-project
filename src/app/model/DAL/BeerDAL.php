@@ -118,9 +118,9 @@ class BeerDAL extends BaseDAL{
 
             $stmt->execute();
 
-            $this->conn->close();
 
         } catch (\DataBaseException $e) {
+            echo $e->getMessage();
             if (\Settings::DEBUG_MODE) {
                 throw $e;
             } else {

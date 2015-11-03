@@ -49,7 +49,7 @@ class AddBeerView extends BaseFormView{
     }
 
     private function getPubDropDown() {
-        $html = "<select id='". self::$pubId ."'>";
+        $html = "<select id='". self::$pubId ."' name='". self::$pubId ."'>";
         foreach ($this->pubs->get() as $pub) {
             $html .= $this->getDropDownOption($pub->getName(), $pub->getId());
         }
@@ -70,7 +70,6 @@ class AddBeerView extends BaseFormView{
 
     public function getPubBeer($beerId) {
         $pubId = $this->getPostField(self::$pubId);
-        var_dump($pubId);
         $price = $this->getPostField(self::$priceID);
         return new \model\PubBeer($pubId, $beerId, $price);
     }

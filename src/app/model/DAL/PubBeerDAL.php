@@ -47,15 +47,23 @@ class PubBeerDAL extends BaseDAL {
 
     public function addPubBeer(PubBeer $pubBeer) {
         try {
-            $stmt = $this->conn->prepare("INSERT INTO " . self::$table . "(?, ?, ?");
+            $stmt = $this->conn->prepare("INSERT INTO " . self::$table . " VALUES(?, ?, ?)");
 
             if (!$stmt)
                 throw new \DataBaseException($this->conn->error);
 
-            $stmt->bind_param("ssd", $pubBeer->getPubId(), $pubBeer->getBeerId(), $pubBeer->getPrice());
+            $pubId = $pubBeer->getPubId();
+            $beerId = $pubBeer->getBeerId();
+            $price = $pubBeer->getPrice();
+
+            var_dump($pubId);
+            var_dump($beerId);
+            var_dump($price);
+
+            $stmt->bind_param("ssd", $pubId, $beerId, $price);
             $stmt->execute();
         } catch (\DataBaseException $e) {
-
+            echo $e->getMessage();
         }
     }
 }

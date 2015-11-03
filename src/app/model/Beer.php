@@ -33,7 +33,12 @@ class Beer {
     }
 
     private function buildUniqueID() {
-        $name  = str_replace(' ', '_', $this->name);
+
+        $name = str_replace(" ", "_", $this->name);
+        $name = iconv("UTF-8", "ASCII//TRANSLIT", $name);
+        $name = preg_replace('/[^a-zA-Z0-9]/', '', $name);
+
+
         return strtolower(htmlentities($name . "_" . $this->volume . "_" . $this->servingType, ENT_QUOTES));
     }
 

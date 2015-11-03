@@ -73,6 +73,7 @@ class AdminController {
                 $pubBeer = $this->view->getPubBeer($beer->getId());
                 $this->adminFacade->addBeer($beer);
                 $this->adminFacade->addPubBeer($pubBeer);
+
             }
 
         } elseif ($this->navView->adminWantsToAddPub()) {

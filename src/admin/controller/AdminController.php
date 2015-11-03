@@ -10,6 +10,7 @@ namespace controller;
 
 
 use common\SessionHandler;
+use model\AdminFacade;
 use view\AdminView;
 
 require_once("src/common/helpers/ITempDataHandler.php");
@@ -32,6 +33,8 @@ require_once("src/admin/model/LoginModel.php");
 require_once("src/admin/model/UserCredentials.php");
 require_once("src/admin/model/DAL/UserDAL.php");
 require_once("src/admin/model/DAL/TempCredentialsDAL.php");
+require_once("src/admin/view/AdminView.php");
+require_once("src/admin/model/AdminFacade.php");
 
 
 
@@ -39,35 +42,42 @@ class AdminController {
 
 
     private $view;
-    private $sessionHandler;
-    private $userDAL;
     private $navView;
+    private $adminFacade;
 
 
     public function __construct(\view\NavigationView $navView) {
         $this->navView = $navView;
-        $this->sessionHandler = new SessionHandler();
-        $this->userDAL = new \model\UserDAL();
-
+        $this->adminFacade = new AdminFacade();
     }
 
     public function doControl() {
 
-        if ($this->sessionHandler->isLoggedIn()) {
-            $this->view = new AdminView();
-        } else {
-            $cookieHandler = new \view\CookieHandler();
-            $loginModel = new \model\LoginModel($this->sessionHandler, $this->userDAL);
-            $loginView = new \view\LoginView($this->sessionHandler, $cookieHandler, $loginModel);
-            $loginController = new \controller\LoginController($loginModel, $loginView);
+        // setup login
+        $userDAL = new \model\UserDAL();
+        $sessionHandler = new \common\SessionHandler();
+        $cookieHandler = new \view\CookieHandler();
+        $loginModel = new \model\LoginModel($sessionHandler, $userDAL);
+        $loginView = new \view\LoginView($sessionHandler, $cookieHandler, $loginModel);
+        $loginController = new \controller\LoginController($loginModel, $loginView);
 
-            $loginController->doLoginAction();
+        // execute
+        $loginController->doLoginAction();
 
-            $this->view = $loginController->getView();
+        $this->view = new \view\AdminView($loginView, $this->navView);
+
+        if ($this->navView->adminWantsToAddBeer()) {
+            $this->view = new \view\AddBeerView($sessionHandler, $this->adminFacade->getPubs());
+            if ($this->view->adminPressedSave()) {
+                $beer =  $this->view->getBeer();
+                $pubBeer = $this->view->getPubBeer($beer->getId());
+                $this->adminFacade->addBeer($beer);
+                $this->adminFacade->addPubBeer($pubBeer);
+            }
+
+        } elseif ($this->navView->adminWantsToAddPub()) {
+            $this->view = new \view\AddPubView($sessionHandler);
         }
-
-
-
     }
 
     public function getView() {

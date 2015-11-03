@@ -77,6 +77,10 @@ abstract class BaseFormView {
         return "<input type='radio' name='$name' value='$value'>$value</input>";
     }
 
+    protected function getDropDownOption($name, $value) {
+        return "<option value='" . $value . "'>" . $name . "</option>";
+    }
+
     /**
      * Returns a $_POST-variable. Shamelessly stolen from
      * https://github.com/dntoll/1DV608/blob/master/lectures/LectureCode/view/AdminView.php#L68

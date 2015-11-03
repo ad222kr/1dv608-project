@@ -12,6 +12,6 @@ namespace view;
 class AddPubView extends BaseFormView {
 
     public function response() {
-
+        return "add pub lol";
     }
 }

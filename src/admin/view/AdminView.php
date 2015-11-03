@@ -12,15 +12,20 @@ namespace view;
 class AdminView  {
 
 
+    private $loginView;
+    private $navView;
+    public function __construct(LoginView $loginView, NavigationView $navView) {
+        $this->loginView = $loginView;
+        $this->navView = $navView;
+    }
+
+
     public function response() {
-        return "<p>Logged in as Admin</p>";
+        $html = "<h2>Administration</h2>";
+        $html .= $this->loginView->response();
+        $html .= "<a href=" . $this->navView->getURLToAddPub() . ">Lägg till pub</a>";
+        $html .= "<a href=" . $this->navView->getURLToAddBeer() . ">Lägg til öl</a>";
+        return $html;
     }
 
-    public function adminWantsToAddPub() {
-
-    }
-
-    public function adminWantsToAddBeer() {
-
-    }
 }

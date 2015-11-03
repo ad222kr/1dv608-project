@@ -78,4 +78,12 @@ class PubDAL extends BaseDAL {
 
     }
 
+    public function addPub(Pub $pub) {
+        try {
+
+        } catch (\DataBaseException $e) {
+
+        }
+    }
+
 }

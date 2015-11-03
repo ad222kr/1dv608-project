@@ -20,38 +20,43 @@ class NavigationView {
      * Administration-action
      * @var string
      */
-    public static $admin   = "admin";
+    private static $admin   = "admin";
+
+    private static $addPub  = "add_pub";
+
+    private static $addBeer = "add_beer";
+
 
     /**
      * Pubs-action
      * @var string
      */
-    public static $pubs    = "pubs";
+    private static $pubs    = "pubs";
 
     /**
      * Beers-action
      * @var string
      */
-    public static $beers   = "beers";
+    private static $beers   = "beers";
 
     /**
      * Show all action. Used together with beers/pubs example: ?action=pubs&show_all
      * @var string
      */
-    public static $showAll = "show_all";
+    private static $showAll = "show_all";
 
     /**
      * Used for both showing pub_id and determening if user wants to see a pub
      * if pub_id isset, the user wants to view a pub
      * @var string
      */
-    public static $pubID = "pub_id";
+    private static $pubID = "pub_id";
 
     /**
      * See NavigationView::$pubId
      * @var string
      */
-    public static $beerID = "beer_id";
+    private static $beerID = "beer_id";
 
 
     /**
@@ -120,9 +125,6 @@ class NavigationView {
     /**
      *
      */
-    public function adminWantsToAddBeer() {
-
-    }
 
     /**
      * @return bool
@@ -138,12 +140,28 @@ class NavigationView {
         return isset($_GET[self::$beerID]);
     }
 
+    public function adminWantsToAddPub() {
+        return isset($_GET[self::$addPub]);
+    }
+
+    public function adminWantsToAddBeer() {
+        return isset($_GET[self::$addBeer]);
+    }
+
     /**
      * @param $pubId
      * @return string
      */
     public function getURLToPub($pubId) {
         return "?".self::$action."=".self::$pubs."&".self::$pubID."=".$pubId;
+    }
+
+    public function getURLToAddPub() {
+        return "?".self::$action."=".self::$admin."&".self::$addPub;
+    }
+
+    public function getURLToAddBeer() {
+        return "?".self::$action."=".self::$admin."&".self::$addBeer;
     }
 
     /**

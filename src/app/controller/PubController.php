@@ -35,16 +35,15 @@ class PubController  {
     private $beers;
 
     public function __construct(\view\ListPubsView $listPubsView, \view\NavigationView $navView,
-                                \model\PubRepository $pubs, \model\BeerRepository $beers) {
+                                \model\BeerRepository $beers) {
         $this->navView = $navView;
-        $this->pubs = $pubs;
         $this->listPubsView = $listPubsView;
         $this->beers = $beers;
     }
 
 
     public function doControl() {
-        var_dump($this->navView->userWantsToSeeBeer());
+
         if ($this->navView->userWantsToSeePub()) {
             $this->viewPub();
         } elseif ($this->navView->userWantsToSeeBeer()) {
@@ -66,7 +65,6 @@ class PubController  {
     public function viewBeer() {
         $beerID = $this->navView->getBeerId();
         $beer = $this->beers->getById($beerID);
-        var_dump($beer);
         $this->beerView = new \view\BeerView($beer);
 
     }

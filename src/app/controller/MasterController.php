@@ -5,6 +5,7 @@ namespace controller;
 
 
 use model\BeerRepository;
+use model\Service;
 
 require_once("src/app/model/Service.php");
 require_once("config/Settings.php");
@@ -60,17 +61,12 @@ class MasterController {
      */
     private $layoutView;
 
-    /**
-     * Talks to the DAL
-     * @var Service
-     */
-    private $service;
 
 
     public function __construct() {
         $this->navView = new \view\NavigationView();
         $this->layoutView = new \view\LayoutView($this->navView);
-        $this->service = new \model\Service();
+
     }
 
     public function run() {
@@ -94,10 +90,16 @@ class MasterController {
     }
 
     public function doPub() {
-        $pubs = $this->service->getPubs();
-        $beers = $this->service->getBeers();
+        // Service class that talks to the db. Instance created here since admin-controller has
+        // its own class called AdminFacade, dont want to create service-object if admin-action
+        $service = new \model\Service();
+
+        $pubs = $service->getPubs();
+        $beers = $service->getBeers();
+
         $listPubsView = new \view\ListPubsView($pubs, $this->navView);
-        $pubController = new \controller\PubController($listPubsView, $this->navView, $pubs, $beers);
+        $pubController = new \controller\PubController($listPubsView, $this->navView, $beers);
+
         $pubController->doControl();
 
         return $pubController->getView()->response();

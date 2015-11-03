@@ -65,7 +65,7 @@ class AdminController {
         $isLoggedIn = $loginController->doLoginAction();
 
         $this->view = new \view\AdminView($loginView, $this->navView, $isLoggedIn);
-        if ($isLoggedIn) return;
+        if (!$isLoggedIn) return;
 
 
         if ($this->navView->adminWantsToAddBeer()) {

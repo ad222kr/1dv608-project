@@ -18,6 +18,8 @@ abstract class BaseFormView {
 
     private static $messageKey = "SessionHandler::TempMessage";
     protected static $registeredUsernameKey = "SessionHandler::Username";
+    protected static $inputTypeText = "text";
+    protected static $inputTypeNumber = "number";
     /**
      * @var \common\ITempDataHandler
      */
@@ -71,6 +73,13 @@ abstract class BaseFormView {
 
         return "<label for='$name'>$title: </label>
                 <input id='$name' type='$type' value='$value' name='$name' />";
+    }
+
+    protected function getFloatingPointNumberInputField($title, $name) {
+        $value = $this->getPostField($name);
+
+        return "<label for='$name'>$title: </label>
+                <input id='$name' type='number' step='any' value='$value' name='$name' />";
     }
 
     protected function getRadioButton($name, $value) {

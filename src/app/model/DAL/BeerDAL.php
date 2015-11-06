@@ -152,7 +152,6 @@ class BeerDAL extends BaseDAL{
 
             $stmt->execute();
 
-            $this->conn->close();
 
         } catch (\DataBaseException $e) {
             if (\Settings::DEBUG_MODE) {

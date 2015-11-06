@@ -13,11 +13,16 @@ class Pub {
     private $webpageURL;
     private $beers;
 
-    public function __construct($id, $name, $address, $webpageURL) {
-        $this->id = $id;
+    public function __construct($name, $address, $webpageURL, $id="") {
+
         $this->name = $name;
         $this->address = $address;
         $this->webpageURL = $webpageURL;
+        if (empty($id)) {
+            $this->id = $this->buildUniqueID($name);
+        } else {
+            $this->id = $id;
+        }
         $this->beers = new BeerRepository();
     }
 
@@ -66,6 +71,16 @@ class Pub {
 
     public function isSame(\model\Pub $other) {
         return $this->id === $other->getId();
+    }
+
+    private function buildUniqueID($name) {
+
+        $name = str_replace(" ", "_", $this->name);
+        $name = iconv("UTF-8", "ASCII//TRANSLIT", $name);
+        $name = preg_replace('/[^a-zA-Z0-9]/', '', $name);
+
+
+        return strtolower(htmlentities($name, ENT_QUOTES));
     }
 
 

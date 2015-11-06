@@ -33,7 +33,7 @@ class PubDAL extends BaseDAL {
 
 
             while ($stmt->fetch()) {
-                $pub = new Pub($id, $name, $address, $webpageURL);
+                $pub = new Pub($name, $address, $webpageURL, $id);
                 $pubs->add($pub);
             }
 
@@ -80,9 +80,29 @@ class PubDAL extends BaseDAL {
 
     public function addPub(Pub $pub) {
         try {
+            $stmt = $this->conn->prepare("INSERT INTO " .self::$table. " VALUES(?, ?, ?, ?)");
+
+            if (!$stmt)
+                throw new \DataBaseException($this->conn->error);
+
+            $id = $pub->getId();
+            $name = $pub->getName();
+            $address = $pub->getAddress();
+            $webpage = $pub->getWebpageURL();
+            $stmt->bind_param("ssss", $id, $name, $address, $webpage);;
+
+
+
+            $stmt->execute();
 
         } catch (\DataBaseException $e) {
-
+            if (\Settings::DEBUG_MODE) {
+                throw $e;
+            } else {
+                error_log($e->getMessage() . "\n", 3, \Settings::ERROR_LOG);
+                echo "Something went wrong when connecting to the database";
+                die();
+            }
         }
     }
 

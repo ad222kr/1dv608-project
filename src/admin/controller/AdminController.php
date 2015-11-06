@@ -80,6 +80,10 @@ class AdminController {
 
         } elseif ($this->navView->adminWantsToAddPub()) {
             $this->view = new \view\AddPubView($sessionHandler);
+            if ($this->view->adminPressedSave()) {
+                $pub = $this->view->getPub();
+                $this->adminFacade->addPub($pub);
+            }
         }
     }
 

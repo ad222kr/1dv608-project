@@ -20,9 +20,6 @@ class AddBeerView extends BaseFormView{
     private static $pubId = "AddBeerView::PubId";
 
 
-    private static $inputTypeText = "text";
-    private static $inputTypeNumber = "number";
-
     private static $servingTypeBottleValue = "Flaska";
     private static $servingTypeTapValue = "Fat";
 
@@ -35,11 +32,11 @@ class AddBeerView extends BaseFormView{
         return "<form method='post'>" .
                 $this->getPubDropDown() . "<br />" .
                 $this->getTextField("Namn: ", self::$nameID, self::$inputTypeText) . "<br />" .
-                $this->getTextField("Alkoholprocent: ", self::$abvID, self::$inputTypeNumber) . "<br />" .
+                $this->getFloatingPointNumberInputField("Alkoholprocent: ", self::$abvID) . "<br />" .
                 $this->getTextField("Bryggeri: ", self::$breweryID, self::$inputTypeText) . "<br />" .
                 $this->getTextField("Land: ", self::$countryID, self::$inputTypeText) . "<br />" .
                 $this->getTextField("Volym: ", self::$volumeID, self::$inputTypeNumber) . "<br />" .
-                $this->getTextField("Pris: ", self::$priceID, self::$inputTypeNumber) . "<br />" .
+                $this->getFloatingPointNumberInputField("Pris: ", self::$priceID) . "<br />" .
 
                 "<label for='" . self::$servingTypeID . "'>Serveringstyp: </label><br />" .
                 $this->getRadioButton(self::$servingTypeID, self::$servingTypeBottleValue) . "<br />" .

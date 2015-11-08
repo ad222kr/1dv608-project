@@ -11,6 +11,7 @@ namespace view;
 
 class BeerView  {
 
+    private static $messageId = "message";
     private $beer;
 
     public function __construct(\model\Beer $beer) {

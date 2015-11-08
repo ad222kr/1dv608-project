@@ -8,6 +8,8 @@
 
 namespace model;
 
+require_once("src/common/exceptions/PriceMissingException.php");
+
 
 class PubBeer {
     private $beerID;
@@ -15,6 +17,9 @@ class PubBeer {
     private $price;
 
     public function __construct( $pubID, $beerID, $price) {
+        if (empty($price)) {
+            throw new \PriceMissingException();
+        }
         $this->beerID = $beerID;
         $this->pubID = $pubID;
         $this->price = $price;

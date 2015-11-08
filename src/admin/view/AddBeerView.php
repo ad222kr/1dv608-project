@@ -18,7 +18,14 @@ class AddBeerView extends BaseFormView{
     private static $priceID = "AddBeerView::Price";
     private static $submitPostID = "AddBeerView::Submit";
     private static $pubId = "AddBeerView::PubId";
+    private static $messageId = "AddBeerView::Message";
 
+    private static $nameMissingMessage = "Ölens namn saknas, vänligen fyll i";
+    private static $abvMissingMessage = "Ölens alkoholprocent saknas, vänligen fyll i";
+    private static $breweryMissingMessage = "Ölens bryggeri saknas, vänligen fyll i";
+    private static $countryMissingMessage = "Ölens ursprungsland saknas, vänligen fyll i";
+    private static $volumeMissingMessage = "Ölens volum saknas, vänligen fyll i";
+    private static $priceMissingMessage = "Ölnes pris saknas, vänligen fyll i";
 
     private static $servingTypeBottleValue = "Flaska";
     private static $servingTypeTapValue = "Fat";
@@ -29,7 +36,10 @@ class AddBeerView extends BaseFormView{
     }
 
     public function response() {
-        return "<form method='post'>" .
+
+        $message = $this->getMessage();
+        return "<form method='post'>
+                <p id='" . self::$messageId . "'>" . $message . "</p>" .
                 $this->getPubDropDown() . "<br />" .
                 $this->getTextField("Namn: ", self::$nameID, self::$inputTypeText) . "<br />" .
                 $this->getFloatingPointNumberInputField("Alkoholprocent: ", self::$abvID) . "<br />" .
@@ -55,20 +65,38 @@ class AddBeerView extends BaseFormView{
     }
 
     public function getBeer() {
-        $name = $this->getPostField(self::$nameID);
-        $abv = $this->getPostField(self::$abvID);
-        $brewery = $this->getPostField(self::$breweryID);
-        $country = $this->getPostField(self::$countryID);
-        $volume = $this->getPostField(self::$volumeID);
-        $servingType = $this->getPostField(self::$servingTypeID);
+        try {
+            $name = $this->getPostField(self::$nameID);
+            $abv = $this->getPostField(self::$abvID);
+            $brewery = $this->getPostField(self::$breweryID);
+            $country = $this->getPostField(self::$countryID);
+            $volume = $this->getPostField(self::$volumeID);
+            $servingType = $this->getPostField(self::$servingTypeID);
 
-        return new Beer($name, $abv, $brewery, $country, $volume, $servingType);
+            return new Beer($name, $abv, $brewery, $country, $volume, $servingType);
+        } catch (\NameMissingException $e) {
+            // Should gather all missing and present every field that is empty but not time..
+            $this->setMessage(self::$nameMissingMessage, true);
+        } catch (\AbvMissingException $e) {
+            $this->setMessage(self::$abvMissingMessage, true);
+        } catch (\BreweryMissingException $e) {
+            $this->setMessage(self::$breweryMissingMessage, true);
+        } catch (\CountryMissingException $e) {
+            $this->setMessage(self::$countryMissingMessage, true);
+        } catch (\VolumeMissingException $e) {
+            $this->setMessage(self::$volumeMissingMessage, true);
+        }
     }
 
     public function getPubBeer($beerId) {
-        $pubId = $this->getPostField(self::$pubId);
-        $price = $this->getPostField(self::$priceID);
-        return new \model\PubBeer($pubId, $beerId, $price);
+        try {
+            $pubId = $this->getPostField(self::$pubId);
+            $price = $this->getPostField(self::$priceID);
+            return new \model\PubBeer($pubId, $beerId, $price);
+        } catch (\PriceMissingException $e) {
+            $this->setMessage(self::$priceMissingMessage, true);
+        }
+
     }
 
     public function adminPressedSave() {

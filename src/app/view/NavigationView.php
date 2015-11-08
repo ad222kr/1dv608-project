@@ -172,6 +172,14 @@ class NavigationView {
         return "?".self::$action."=".self::$beers."&".self::$beerID."=".$beerID;
     }
 
+    public function redirectToBeer($beerId) {
+        header("Location: ?action=beers&beer_id=". $beerId);
+    }
+
+    public function redirectToPub($pubId) {
+        header("Location: ?action=pubs&pub_id=" . $pubId);
+    }
+
     /**
      * Returns the beer-id specified in the url, if not, return null.
      * @return null | string

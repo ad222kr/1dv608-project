@@ -65,24 +65,33 @@ class AdminController {
         $isLoggedIn = $loginController->doLoginAction();
 
         $this->view = new \view\AdminView($loginView, $this->navView, $isLoggedIn);
+
         if (!$isLoggedIn) return;
 
-
         if ($this->navView->adminWantsToAddBeer()) {
+
             $this->view = new \view\AddBeerView($sessionHandler, $this->adminFacade->getPubs());
+
             if ($this->view->adminPressedSave()) {
+
                 $beer =  $this->view->getBeer();
+                if ($beer == null) return;
+
                 $pubBeer = $this->view->getPubBeer($beer->getId());
                 $this->adminFacade->addBeer($beer);
                 $this->adminFacade->addPubBeer($pubBeer);
-
+                $this->navView->redirectToBeer($beer->getId());
             }
 
         } elseif ($this->navView->adminWantsToAddPub()) {
+
             $this->view = new \view\AddPubView($sessionHandler);
+
             if ($this->view->adminPressedSave()) {
                 $pub = $this->view->getPub();
+                if ($pub == null) return;
                 $this->adminFacade->addPub($pub);
+                $this->navView->redirectToPub($pub->getId());
             }
         }
     }

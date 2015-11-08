@@ -4,6 +4,9 @@ namespace model;
 
 require_once("src/common/exceptions/BeerDoesNotExistException.php");
 require_once("src/common/exceptions/BeerAlreadyExistsException.php");
+require_once("src/common/exceptions/AddressMissingException.php");
+require_once("src/common/exceptions/WebpageURLMissingException.php");
+
 
 class Pub {
 
@@ -15,14 +18,26 @@ class Pub {
 
     public function __construct($name, $address, $webpageURL, $id="") {
 
+        if (empty($name))
+            throw new \NameMissingException();
+        if (empty($address))
+            // Here should check with a regex that address is valid swedish
+            throw new \AddressMissingException();
+        if (empty($webpageURL))
+            // Should probably check with a regex that url is valid...
+            throw new \WebpageURLMissingException();
+
         $this->name = $name;
         $this->address = $address;
-        $this->webpageURL = $webpageURL;
+        $this->webpageURL = $this->addHttp($webpageURL);
+
+        // if no id, new pub. get it a unique id
         if (empty($id)) {
             $this->id = $this->buildUniqueID($name);
         } else {
             $this->id = $id;
         }
+
         $this->beers = new BeerRepository();
     }
 
@@ -59,9 +74,7 @@ class Pub {
         $this->beers->add($toBeAdded);
     }
 
-    // Not used yet. Maybe fix solution to use this instead of
     public function getBeer($id) {
-        // TODO:_ check for errors etc,exception
         $this->beers->getById($id);
     }
 
@@ -79,11 +92,19 @@ class Pub {
         $name = iconv("UTF-8", "ASCII//TRANSLIT", $name);
         $name = preg_replace('/[^a-zA-Z0-9]/', '', $name);
 
-
         return strtolower(htmlentities($name, ENT_QUOTES));
     }
 
-
-
-
+    /**
+     * Adds http:// to url if does not exist. Should probably be a static in a "helper"-class
+     * @param $url
+     * @return string
+     */
+    private function addHttp($url) {
+        // http://stackoverflow.com/a/2762083
+        if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
+            $url = "http://" . $url;
+        }
+        return $url;
+    }
 }

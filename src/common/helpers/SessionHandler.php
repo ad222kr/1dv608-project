@@ -8,7 +8,6 @@ class SessionHandler implements ITempDataHandler, ILoginStateHandler {
         session_start();
     }
     public function setTempData($key, $value) {
-        assert(is_string($value), "Argument \$message needs to be of type string");
         $this->setData($key, $value);
     }
     public function getTempData($key) {
@@ -51,11 +50,5 @@ class SessionHandler implements ITempDataHandler, ILoginStateHandler {
     }
     private function exists($key) {
         return isset($_SESSION[$key]);
-    }
-    public function setRegisteredUsername($name) {
-        $this->setData(self::$registeredUsernameKey, $name);
-    }
-    public function getRegisteredUsername() {
-        $this->getAndUnset(self::$registeredUsernameKey);
     }
 }

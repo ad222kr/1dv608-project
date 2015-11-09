@@ -29,7 +29,7 @@ class Pub {
 
         $this->name = $name;
         $this->address = $address;
-        $this->webpageURL = $this->addHttp($webpageURL);
+        $this->webpageURL = $webpageURL;
 
         // if no id, new pub. get it a unique id
         if (empty($id)) {
@@ -95,16 +95,4 @@ class Pub {
         return strtolower(htmlentities($name, ENT_QUOTES));
     }
 
-    /**
-     * Adds http:// to url if does not exist. Should probably be a static in a "helper"-class
-     * @param $url
-     * @return string
-     */
-    private function addHttp($url) {
-        // http://stackoverflow.com/a/2762083
-        if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
-            $url = "http://" . $url;
-        }
-        return $url;
-    }
 }

@@ -17,6 +17,7 @@ namespace view;
 abstract class BaseFormView {
 
     private static $messageKey = "SessionHandler::TempMessage";
+    private static $errorMessagesKey = "SessionHandler::ErrorMessages";
     protected static $registeredUsernameKey = "SessionHandler::Username";
     protected static $inputTypeText = "text";
     protected static $inputTypeNumber = "number";
@@ -61,11 +62,31 @@ abstract class BaseFormView {
             $this->message = $message;
         }
     }
+
+    protected function setErrorMessages($errorMessages) {
+        assert(is_array($errorMessages));
+        $this->tempDataHandler->setTempData(self::$errorMessagesKey, $errorMessages);
+    }
+
     protected function getMessage() {
         if (strlen($this->message) > 0) {
             return $this->message;
         }
         return $this->tempDataHandler->getTempData(self::$messageKey);
+    }
+
+    protected function getErrorMessages() {
+        $messages = $this->tempDataHandler->getTempData(self::$errorMessagesKey);
+        if (empty($messages)) return "";
+
+        $ret = "<ul>";
+        foreach ($messages as $errMsg) {
+            $ret .= "<li>$errMsg</li>";
+        }
+
+        $ret .= "</ul>";
+        return $ret;
+
     }
 
     protected function getTextField($title, $name, $type) {

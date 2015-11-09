@@ -47,7 +47,7 @@ Preconditions: User is logged in as administrator
 2. Step 4 in main scenario  
 
 
-###Use case 3 - Add Pub  
+###Use case 4 - Add Pub  
 Preconditions: User is logged in as administrator
 ####Main  
 1. User navigates to the administration-part of the app  

@@ -8,14 +8,15 @@ The idea was that users could comment on the beers/pubs and leave a rating and m
 ##Use cases
 
 ###Use case 1 - View Pubs
-Main
-1. User navigates to the page.
-2. System presents a list of pubs
-3. User chooses a pub to view from the list
+Main  
+1. User navigates to the page.  
+2. System presents a list of pubs  
+3. User chooses a pub to view from the list  
 4. System presents the pub to the user
-Alternate 1A
-1. User navigates to the page via a bookmark
-2. The pub is no longer in the system
-3. System presents an error page
-4. User navigates back to the fron-page, does step 1 in Main
+
+Alternate 1A  
+1. User navigates to the page via a bookmark  
+2. The pub is no longer in the system  
+3. System presents an error page  
+4. User navigates back to the fron-page, does step 1 in Main  
 

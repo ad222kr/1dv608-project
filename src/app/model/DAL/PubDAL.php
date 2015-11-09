@@ -5,16 +5,32 @@ namespace model;
 
 require_once("src/app/model/PubRepository.php");
 
-
+/**
+ * Class responsible for fetching data from the pubs table
+ *
+ * Class PubDAL
+ * @package model
+ */
 class PubDAL extends BaseDAL {
 
-    private static $table = "pubs"; // change when real table is setup
+    /**
+     * @var string
+     */
+    private static $table = "pubs";
 
 
     public function __construct() {
         parent::__construct();
     }
 
+    /**
+     * Gets all the posts
+     *
+     * @return PubRepository
+     * @throws \DataBaseException
+     * @throws \Exception
+     * @throws \PubAlreadyExistsException
+     */
     public function getPubs() {
 
         try {
@@ -50,6 +66,14 @@ class PubDAL extends BaseDAL {
         }
     }
 
+    /**
+     * Gets one post by ID
+     *
+     * @param $id
+     * @return mixed
+     * @throws \DataBaseException
+     * @throws \Exception
+     */
     public function getPubByID($id) {
 
         try {
@@ -78,6 +102,13 @@ class PubDAL extends BaseDAL {
 
     }
 
+    /**
+     * Inserts a row inte the table pubs
+     *
+     * @param Pub $pub
+     * @throws \DataBaseException
+     * @throws \Exception
+     */
     public function addPub(Pub $pub) {
         try {
             $stmt = $this->conn->prepare("INSERT INTO " .self::$table. " VALUES(?, ?, ?, ?)");
@@ -105,5 +136,4 @@ class PubDAL extends BaseDAL {
             }
         }
     }
-
 }

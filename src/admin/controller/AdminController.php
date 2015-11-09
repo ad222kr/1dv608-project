@@ -8,11 +8,6 @@
 
 namespace controller;
 
-
-use common\SessionHandler;
-use model\AdminFacade;
-use view\AdminView;
-
 require_once("src/common/helpers/ITempDataHandler.php");
 require_once("src/admin/view/BaseFormView.php");
 
@@ -37,23 +32,41 @@ require_once("src/admin/view/AdminView.php");
 require_once("src/admin/model/AdminFacade.php");
 
 
-
+/**
+ * Class AdminController
+ * Handles administration actions like adding pubs and beers to the database.
+ * @package controller
+ */
 class AdminController {
 
-
+    /**
+     * Depending on what action, the view can be one of three different vies.
+     * @var \view\AdminView | \view\AddBeerView | \view\AddPubView
+     */
     private $view;
+
+    /**
+     * @var \view\NavigationView
+     */
     private $navView;
+
+    /**
+     * @var \model\AdminFacade
+     */
     private $adminFacade;
 
 
+    /**
+     * @param \view\NavigationView $navView
+     */
     public function __construct(\view\NavigationView $navView) {
         $this->navView = $navView;
-        $this->adminFacade = new AdminFacade();
+        $this->adminFacade = new \model\AdminFacade();
     }
 
     public function doControl() {
 
-        // setup login
+        // setup everything for the login
         $userDAL = new \model\UserDAL();
         $sessionHandler = new \common\SessionHandler();
         $cookieHandler = new \view\CookieHandler();
@@ -61,11 +74,12 @@ class AdminController {
         $loginView = new \view\LoginView($sessionHandler, $cookieHandler, $loginModel);
         $loginController = new \controller\LoginController($loginModel, $loginView);
 
-        // execute
         $isLoggedIn = $loginController->doLoginAction();
 
+        // The first view is always the AdminView
         $this->view = new \view\AdminView($loginView, $this->navView, $isLoggedIn);
 
+        // Don't want to continue further down if not logged in
         if (!$isLoggedIn) return;
 
         if ($this->navView->adminWantsToAddBeer()) {
@@ -96,6 +110,10 @@ class AdminController {
         }
     }
 
+    /**
+     * Returns a view depending on which action
+     * @return \view\AddBeerView|\view\AddPubView|\view\AdminView
+     */
     public function getView() {
         return $this->view;
     }

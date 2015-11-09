@@ -9,13 +9,17 @@ namespace view;
  */
 class LayoutView  {
 
-    private $cssOff = false; // just debug, cant see var_dump sometimes cus of bootstrap...
-
     /**
      * Title of the application
      * @var string
      */
     private static $title = "AppYo";
+
+    /**
+     * CSS to be rendered
+     *
+     * @var array
+     */
     private static $css = array(
         "bootstrap" => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css",
         "bootstrap-theme" => "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css",
@@ -27,12 +31,19 @@ class LayoutView  {
      */
     private $navigationView;
 
+    /**
+     * @param NavigationView $navigationView
+     */
     public function __construct(NavigationView $navigationView) {
         $this->navigationView = $navigationView;
     }
 
+    /**
+     * Returns a string representing the html-code to load css-files
+     *
+     * @return string
+     */
     private function loadCss() {
-        if ($this->cssOff) return; //debug remove later
         $ret = "";
         foreach (self::$css as $styleSheet) {
             $ret .= '<link rel="stylesheet" href="' . $styleSheet . '">';
@@ -40,6 +51,9 @@ class LayoutView  {
         return $ret;
     }
 
+    /**
+     * @param $html - Html to be rendered (response of the view-classes)
+     */
     public function render($html) {
 
         echo '<!DOCTYPE html>

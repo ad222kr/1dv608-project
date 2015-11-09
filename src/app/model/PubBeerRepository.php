@@ -16,12 +16,21 @@ namespace model;
 
 class PubBeerRepository {
 
+    /**
+     * @var array
+     */
     private $pubBeers = array();
 
+    /**
+     * @param PubBeer $toBeAdded
+     */
     public function add(\model\PubBeer $toBeAdded) {
         $this->pubBeers[] = $toBeAdded;
     }
 
+    /**
+     * @return array
+     */
     public function get() {
         return $this->pubBeers;
     }

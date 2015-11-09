@@ -71,6 +71,10 @@ class ListPubsView  {
         }
 
     }
+
+    /**
+     * @return string
+     */
     private function getPubTableRows() {
         $pubs = $this->pubRepository->get();
         $html = "<thead><tr><th>Namn</th><th>Adress</th></thead>";

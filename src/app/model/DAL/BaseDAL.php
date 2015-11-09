@@ -39,6 +39,11 @@ abstract class BaseDAL {
 
     }
 
+    /**
+     * Trys to establish a connection to the database
+     *
+     * @return \mysqli - connection to the db
+     */
     private function getConnection() {
         try {
             $url = parse_url(getenv(\Settings::DATABASE_ENV_PATH));

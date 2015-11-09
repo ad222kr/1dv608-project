@@ -29,7 +29,6 @@ class BeerRepository {
         if (isset($this->beers[$id]))
             return $this->beers[$id];
 
-        // heroku dont like
         throw new \BeerDoesNotExistException("Beer does not exist in the database");
     }
 

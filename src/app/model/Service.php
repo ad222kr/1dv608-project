@@ -7,11 +7,27 @@ require_once("src/app/model/DAL/PubDAL.php");
 require_once("src/app/model/DAL/BeerDAL.php");
 require_once("src/app/model/DAL/PubBeerDAL.php");
 
+/**
+ * Class Service
+ * Responsible for talking to the DAL-classes. Like the AdminFacade but with readonly access
+ * @package model
+ */
 
 class Service {
 
+    /**
+     * @var BeerDAL
+     */
     private $beerDAL;
+
+    /**
+     * @var PubDAL
+     */
     private $pubDAL;
+
+    /**
+     * @var PubBeerDAL
+     */
     private $pubBeerDAL;
 
     public function __construct() {
@@ -20,6 +36,11 @@ class Service {
         $this->pubBeerDAL = new PubBeerDAL();
     }
 
+    /**
+     * @return PubRepository
+     * @throws \DataBaseException
+     * @throws \Exception
+     */
     public function getPubs() {
         $pubRepository = $this->pubDAL->getPubs();
         $beerRepository = $this->beerDAL->getBeers();
@@ -43,13 +64,31 @@ class Service {
         return $pubRepository;
     }
 
+    /**
+     * @return BeerRepository
+     * @throws \DataBaseException
+     * @throws \Exception
+     */
     public function getBeers() {
         return $this->beerDAL->getBeers();
     }
+
+    /**
+     * @param $id
+     * @return Beer
+     * @throws \BeerDoesNotExistException
+     * @throws \DataBaseException
+     * @throws \Exception
+     */
     public function getBeerById($id) {
         return $this->beerDAL->getBeerById($id);
     }
 
+    /**
+     * @return PubBeerRepository
+     * @throws \DataBaseException
+     * @throws \Exception
+     */
     private function getPubBeers() {
         return $this->pubBeerDAL->getPubBeers();
     }

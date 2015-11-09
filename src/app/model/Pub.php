@@ -7,13 +7,38 @@ require_once("src/common/exceptions/BeerAlreadyExistsException.php");
 require_once("src/common/exceptions/AddressMissingException.php");
 require_once("src/common/exceptions/WebpageURLMissingException.php");
 
+/**
+ * Class Pub
+ * Represents a post in the pubs table
+ * Also holds the beers connected to it
+ * @package model
+ */
 
 class Pub {
 
+    /**
+     * @var string
+     */
     private $id;
+
+    /**
+     * @var string
+     */
     private $name;
+
+    /**
+     * @var string
+     */
     private $address;
+
+    /**
+     * @var string
+     */
     private $webpageURL;
+
+    /**
+     * @var BeerRepository
+     */
     private $beers;
 
     public function __construct($name, $address, $webpageURL, $id="") {
@@ -21,10 +46,9 @@ class Pub {
         if (empty($name))
             throw new \NameMissingException();
         if (empty($address))
-            // Here should check with a regex that address is valid swedish
+            // Here should check with a regex that address is valid swedish probably?
             throw new \AddressMissingException();
         if (empty($webpageURL))
-            // Should probably check with a regex that url is valid...
             throw new \WebpageURLMissingException();
 
         $this->name = $name;
@@ -86,7 +110,7 @@ class Pub {
         return $this->id === $other->getId();
     }
 
-    private function buildUniqueID($name) {
+    private function buildUniqueID() {
 
         $name = str_replace(" ", "_", $this->name);
         $name = iconv("UTF-8", "ASCII//TRANSLIT", $name);

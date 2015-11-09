@@ -20,7 +20,6 @@ class LoginController {
      */
     private $loginView;
 
-    private $navView;
     /**
      * @param \model\LoginModel $loginModel
      * @param \view\LoginView $loginView
@@ -46,7 +45,6 @@ class LoginController {
             if ($user == null) return;
             $this->loginModel->tryLoginUser($user);
             $this->loginView->setLoginSucceeded();
-            $this->loginView->reloadPage();
         }  catch (\WrongCredentialsException $e) {
             $this->loginView->setLoginFailed();
         }

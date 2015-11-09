@@ -8,20 +8,40 @@
 
 namespace view;
 
+/**
+ * Class BeerView
+ * Presents the view for a \model\Beer object
+ * @package view
+ */
 
 class BeerView  {
 
-    private static $messageId = "message";
+    /**
+     * @var \model\Beer
+     */
     private $beer;
 
+    /**
+     * @param \model\Beer $beer
+     */
     public function __construct(\model\Beer $beer) {
         $this->beer = $beer;
     }
 
+    /**
+     * Returns the html-response of the view
+     *
+     * @return string
+     */
     public function response() {
         return $this->getBeerHTML();
     }
 
+    /**
+     * Gets the html-representation of the beer
+     *
+     * @return string
+     */
     private function getBeerHTML() {
         $image = $this->beer->getImageURL();
         $html = '<div class="row">

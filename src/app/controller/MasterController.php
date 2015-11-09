@@ -61,16 +61,16 @@ class MasterController {
      */
     private $layoutView;
 
-
-
     public function __construct() {
         $this->navView = new \view\NavigationView();
         $this->layoutView = new \view\LayoutView($this->navView);
 
     }
 
+    /**
+     * @throws \Exception
+     */
     public function run() {
-
         try {
             if ($this->navView->userWantsToDoPubsAndBeers()) {
                 $html = $this->doPub();
@@ -89,6 +89,11 @@ class MasterController {
         }
     }
 
+    /**
+     * Does the control for pub-actions and returns the html-response of the view of pubcontroller
+     *
+     * @return string - HTML-response of the view
+     */
     public function doPub() {
         // Service class that talks to the db. Instance created here since admin-controller has
         // its own class called AdminFacade, dont want to create service-object if admin-action
@@ -105,6 +110,11 @@ class MasterController {
         return $pubController->getView()->response();
     }
 
+    /**
+     * Does the control for admin-actions and returns the html-response of the view of admincontroller
+     *
+     * @return string - HTML-response of the view
+     */
     private function doAdmin() {
 
         $adminController = new \controller\AdminController($this->navView);

@@ -11,15 +11,31 @@ namespace model;
 require_once("src/app/model/PubBeerRepository.php");
 require_once("src/app/model/PubBeer.php");
 
+/**
+ * Class responsible for fetching posts from the relational table pub_beer
+ *
+ * Class PubBeerDAL
+ * @package model
+ */
 
 class PubBeerDAL extends BaseDAL {
 
+    /**
+     * @var string
+     */
     private static $table = "pub_beer";
 
     public function __construct() {
         parent::__construct();
     }
 
+    /**
+     * Gets all posts from the table
+     *
+     * @return PubBeerRepository
+     * @throws \DataBaseException
+     * @throws \Exception
+     */
     public function getPubBeers() {
         try {
             $stmt = $this->conn->prepare("SELECT * FROM " . self::$table);
@@ -40,11 +56,24 @@ class PubBeerDAL extends BaseDAL {
             return $ret;
 
         } catch (\DataBaseException $e) {
-
+            if (\Settings::DEBUG_MODE) {
+                throw $e;
+            } else {
+                error_log($e->getMessage() . "\n", 3, \Settings::ERROR_LOG);
+                echo "Something went wrong when connecting to the database";
+                die();
+            }
         }
 
     }
 
+    /**
+     * Adds a post to the table
+     *
+     * @param PubBeer $pubBeer
+     * @throws \DataBaseException
+     * @throws \Exception
+     */
     public function addPubBeer(PubBeer $pubBeer) {
         try {
             $stmt = $this->conn->prepare("INSERT INTO " . self::$table . " VALUES(?, ?, ?)");
@@ -56,14 +85,16 @@ class PubBeerDAL extends BaseDAL {
             $beerId = $pubBeer->getBeerId();
             $price = $pubBeer->getPrice();
 
-            var_dump($pubId);
-            var_dump($beerId);
-            var_dump($price);
-
             $stmt->bind_param("ssd", $pubId, $beerId, $price);
             $stmt->execute();
         } catch (\DataBaseException $e) {
-            echo $e->getMessage();
+            if (\Settings::DEBUG_MODE) {
+                throw $e;
+            } else {
+                error_log($e->getMessage() . "\n", 3, \Settings::ERROR_LOG);
+                echo "Something went wrong when connecting to the database";
+                die();
+            }
         }
     }
 }

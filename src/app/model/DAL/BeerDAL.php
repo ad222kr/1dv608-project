@@ -4,27 +4,30 @@ namespace model;
 
 require_once("src/app/model/BeerRepository.php");
 
-
+/**
+ * Class responsible for fetching data from the table beers in the db
+ *
+ * Class BeerDAL
+ * @package model
+ */
 class BeerDAL extends BaseDAL{
 
-    /*
-     *  CREATE TABLE `beers` (
-       `Id` int(11) NOT NULL AUTO_INCREMENT,
-       `Name` varchar(80) NOT NULL,
-       `Abv` double NOT NULL,
-       `Manufacturer` varchar(80) NOT NULL,
-       `ImageURL` varchar(255) NOT NULL DEFAULT 'assets/uploaded-beer-pics/no_picture_beer.jpg',
-        PRIMARY KEY (`Id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+    /**
+     * @var string
      */
-
     private static $table = "beers";
 
     public function __construct() {
         parent::__construct();
     }
 
+    /**
+     * Gets all the posts from the beer-table
+     *
+     * @return BeerRepository
+     * @throws \DataBaseException
+     * @throws \Exception
+     */
     public function getBeers() {
 
         try{
@@ -36,8 +39,6 @@ class BeerDAL extends BaseDAL{
             $stmt->execute();
 
             $stmt->bind_result($id, $name, $abv, $manufacturer, $imageURL, $country, $volume, $servingType);
-
-
 
             $ret = new BeerRepository();
 
@@ -56,11 +57,18 @@ class BeerDAL extends BaseDAL{
                 //show error msg
                 die();
             }
-
         }
-
     }
 
+    /**
+     * Gets a single posts from the beer-table by ID
+     *
+     * @param $beerId
+     * @return Beer
+     * @throws \BeerDoesNotExistException
+     * @throws \DataBaseException
+     * @throws \Exception
+     */
     public function getBeerById($beerId) {
 
         try{
@@ -81,9 +89,8 @@ class BeerDAL extends BaseDAL{
             // exception is thrown here
             if ($id == null) throw new \BeerDoesNotExistException();
 
-
-
             return new Beer($name, $abv, $manufacturer, $country, $volume, $servingtype, $imageURL, $id);
+
         } catch (\DataBaseException $e){
             if (\Settings::DEBUG_MODE) {
                 throw $e;
@@ -93,10 +100,15 @@ class BeerDAL extends BaseDAL{
                 die();
             }
         }
-
-
     }
 
+    /**
+     * Adds a beer to the table beers
+     *
+     * @param Beer $beer
+     * @throws \DataBaseException
+     * @throws \Exception
+     */
     public function addBeer(\model\Beer $beer) {
 
         try {
@@ -131,6 +143,13 @@ class BeerDAL extends BaseDAL{
         }
     }
 
+    /**
+     * Updates a post in the table beers
+     *
+     * @param Beer $beer
+     * @throws \DataBaseException
+     * @throws \Exception
+     */
     public function updateBeer(\model\Beer $beer) {
 
         try {
@@ -162,7 +181,5 @@ class BeerDAL extends BaseDAL{
                 die();
             }
         }
-
     }
-
 }

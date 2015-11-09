@@ -9,8 +9,11 @@ require_once("src/common/exceptions/ImageURLMissingException.php");
 require_once("src/common/exceptions/NameMissingException.php");
 require_once("src/common/exceptions/VolumeMissingException.php");
 
-
-
+/**
+ * Class Beer
+ * Represents a post in the table beers
+ * @package model
+ */
 
 class Beer {
 

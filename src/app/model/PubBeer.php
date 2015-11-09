@@ -10,16 +10,40 @@ namespace model;
 
 require_once("src/common/exceptions/PriceMissingException.php");
 
+/**
+ * Class PubBeer
+ * Represents a post in the table pub_beers
+ * @package model
+ */
+
 
 class PubBeer {
+    /**
+     * @var string
+     */
     private $beerID;
+
+    /**
+     * @var string
+     */
     private $pubID;
+
+    /**
+     * @var double
+     */
     private $price;
 
-    public function __construct( $pubID, $beerID, $price) {
+    /**
+     * @param $pubID
+     * @param $beerID
+     * @param $price
+     * @throws \PriceMissingException
+     */
+    public function __construct($pubID, $beerID, $price) {
         if (empty($price)) {
             throw new \PriceMissingException();
         }
+
         $this->beerID = $beerID;
         $this->pubID = $pubID;
         $this->price = $price;

@@ -20,3 +20,15 @@ The idea was that users could comment on the beers/pubs and leave a rating and m
 3. System presents an error page  
 4. User navigates back to the fron-page, does step 1 in Main  
 
+###Use case 2 - View Beer  
+####Main  
+1. Use case 1  
+2. User chooses a beer from the list of available ones.  
+3. The system presents a view of the beer to the user  
+
+####Alternate 1A  
+1. User navigates to the page via a bookmark  
+2. The beer is no longer in the system  
+3. System presents an error page  
+4. User navigates back to the front-page, step 1 in Main  
+

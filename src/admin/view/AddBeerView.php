@@ -2,7 +2,6 @@
 
 namespace view;
 
-require_once("src/common/exceptions/BeerNotValidException.php");
 
 class AddBeerView extends BaseFormView{
 
@@ -107,7 +106,7 @@ class AddBeerView extends BaseFormView{
             $servingType = $this->getPostField(self::$servingTypeID);
 
         if ($this->isValid($name, $abv, $brewery, $country, $volume, $servingType))
-            return new Beer($name, $abv, $brewery, $country, $volume, $servingType);
+            return new \model\Beer($name, $abv, $brewery, $country, $volume, $servingType);
 
         return null; // Controller checks for null
     }

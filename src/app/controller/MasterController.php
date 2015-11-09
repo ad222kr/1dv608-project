@@ -2,14 +2,8 @@
 
 namespace controller;
 
-
-
-use model\BeerRepository;
-use model\Service;
-
 require_once("src/app/model/Service.php");
 require_once("config/Settings.php");
-
 
 require_once("src/app/model/Beer.php");
 require_once("src/app/model/Pub.php");
@@ -22,23 +16,12 @@ require_once("src/app/view/BeerView.php");
 // admin
 
 require_once("src/admin/controller/AdminController.php");
-
 require_once("src/admin/view/AdminView.php");
 require_once("src/admin/view/BaseFormView.php");
 
 require_once("src/admin/view/AddBeerView.php");
 
 require_once("src/admin/view/AddPubView.php");
-
-//exceptions
-
-
-
-
-
-
-
-
 
 
 
@@ -52,12 +35,12 @@ require_once("src/admin/view/AddPubView.php");
 class MasterController {
 
     /**
-     * @var NavigationView
+     * @var \view\NavigationView
      */
     private $navView;
 
     /**
-     * @var LayoutView
+     * @var \view\LayoutView
      */
     private $layoutView;
 

@@ -158,4 +158,6 @@ abstract class BaseFormView {
         }
         return "";
     }
+
+    //protected abstract function isValid();
 }

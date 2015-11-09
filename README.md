@@ -32,3 +32,32 @@ The idea was that users could comment on the beers/pubs and leave a rating and m
 3. System presents an error page  
 4. User navigates back to the front-page, step 1 in Main  
 
+###Use case 3 - Add Beer  
+Preconditions: User is logged in as administrator
+####Main  
+1. User navigates to the administration-part of the app  
+2. System presents user with administration-actions  
+3. User chooses to add a beer to the system  
+4. System asks for information about the beer  
+5. User provides said information  
+6. The system saves the beer to the database  
+
+####Alternate 6A  - Information could not be save (did not pass validation, already exists etc)  
+1. The system presents an error message to the user about what's wrong  
+2. Step 4 in main scenario  
+
+
+###Use case 3 - Add Pub  
+Preconditions: User is logged in as administrator
+####Main  
+1. User navigates to the administration-part of the app  
+2. System presents user with administration-actions  
+3. User chooses to add a pub to the system  
+4. System asks for information about the pub  
+5. User provides said information  
+6. The system saves the pub to the database  
+
+####Alternate 6A  - Information could not be save (did not pass validation, already exists etc)  
+1. The system presents an error message to the user about what's wrong  
+2. Step 4 in main scenario  
+

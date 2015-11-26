@@ -25,11 +25,6 @@ class PubController  {
     private $navView;
 
     /**
-     * @var \model\PubRepository
-     */
-    private $pubs;
-
-    /**
      * @var \model\BeerRepository
      */
     private $beers;
@@ -63,7 +58,7 @@ class PubController  {
         $selectedPub = $this->listPubsView->getSelectedPub();
         if ($selectedPub == null) return;
         $this->pubView = new \view\PubView($selectedPub, $this->navView);
-        
+
     }
 
     /**

@@ -61,3 +61,13 @@ Preconditions: User is logged in as administrator
 1. The system presents an error message to the user about what's wrong  
 2. Step 4 in main scenario  
 
+
+##Test Cases  
+* Post data without any information
+* Post data with some fields left blank
+* Post data with <script> tags
+* Post data with text-values for numeric fields and vice verca
+* Try accessing pubs and beers that do not exists (with get-vars)
+* Test-cases for login found at https://github.com/dntoll/1DV608/blob/master/Assignments/Assignment_2/Assignment2_Test_Cases_Mandatory.md
+
+

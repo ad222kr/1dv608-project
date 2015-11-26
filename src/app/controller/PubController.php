@@ -63,6 +63,7 @@ class PubController  {
         $selectedPub = $this->listPubsView->getSelectedPub();
         if ($selectedPub == null) return;
         $this->pubView = new \view\PubView($selectedPub, $this->navView);
+        
     }
 
     /**
@@ -72,7 +73,6 @@ class PubController  {
         $beerID = $this->navView->getBeerId();
         $beer = $this->beers->getById($beerID);
         $this->beerView = new \view\BeerView($beer);
-
     }
 
     /**

@@ -65,7 +65,7 @@ Preconditions: User is logged in as administrator
 ##Test Cases  
 * Post data without any information
 * Post data with some fields left blank
-* Post data with <script> tags
+* Post data with script tags
 * Post data with text-values for numeric fields and vice verca
 * Try accessing pubs and beers that do not exists (with get-vars)
 * Test-cases for login found at https://github.com/dntoll/1DV608/blob/master/Assignments/Assignment_2/Assignment2_Test_Cases_Mandatory.md

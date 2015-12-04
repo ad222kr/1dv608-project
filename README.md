@@ -1,6 +1,12 @@
 #1dv608 - Project
 Repository for the project in the course Web development with php
 
+##Written essay about the project
+[Can be found here](https://docs.google.com/document/d/1aq3VP5VokMfXT0wbolyq2_nbvumBJw40uL2SH3c1-Jk/edit?usp=sharing)
+
+##Installation
+// TODO
+
 ##Vision
 The vision for this project was to create an application that can list the sortiment of beers for the different pubs in Kalmar and their prices, since it's not that fun to got to the same pub and drink the same bland "stor stark" every friday night.
 The idea was that users could comment on the beers/pubs and leave a rating and maybe upload pictures of their beers, but as of now only an administration can add beers/pubs (since I'm ppretty time optimistic).

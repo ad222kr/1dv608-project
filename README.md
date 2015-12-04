@@ -4,11 +4,14 @@ Repository for the project in the course Web development with php
 ##Written essay about the project
 [Can be found here](https://docs.google.com/document/d/1aq3VP5VokMfXT0wbolyq2_nbvumBJw40uL2SH3c1-Jk/edit?usp=sharing)
 
+##Class Diagram
+[Can be found here](https://raw.githubusercontent.com/ad222kr/1dv608-project/master/classdiagram.png)
+
 ##Installation
 The project uses PHP version 5.6, so the webserver needs support for this version or higher.
-The project uses a MySQL database, and is accessed with the mysqli-extension for php  
-*Download/clone the repository. Drop the files to a webserver.
-*Create a databse with these 3 tables
+The project uses a MySQL database, and is accessed with the mysqli-extension for php    
+* Download/clone the repository. Drop the files to a webserver.
+* Create a databse with these 3 tables
 ```SQL
 CREATE TABLE `beers` (
   `beerid` varchar(255) NOT NULL,
